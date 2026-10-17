@@ -64,6 +64,7 @@
         .photo-display { background: var(--ink); margin: 0 0 20px; overflow: hidden; }
         .photo-label { font-family: 'Space Mono', monospace; font-weight: 700; color: rgba(242,237,232,0.4); padding: 12px 20px 0; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; display: block; }
         .photo-display img { width: 100%; max-height: 520px; object-fit: cover; object-position: top; display: block; }
+        .photo-display video { width: 100%; max-height: 640px; background: var(--ink); display: block; margin: 0 auto; }
         .photo-caption { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: rgba(242,237,232,0.45); font-style: italic; margin: 0; padding: 10px 20px 14px; background: var(--ink); line-height: 1.6; }
         .session-metadata { background: var(--paper-mid); border-radius: 3px; padding: 10px 14px; margin: 0 0 18px; font-family: 'Space Mono', monospace; font-size: 0.62rem; display: flex; flex-wrap: wrap; gap: 8px 20px; }
         .metadata-item { display: flex; gap: 5px; }
@@ -223,9 +224,13 @@
     <div class="log-body">
 
         <div class="photo-display">
-            <span class="photo-label">First run</span>
-            <img src="images/exp01-arcs.jpg" alt="The paper arm on an Arduino drawing overlapping arcs on watercolour paper with a fine-liner pen">
-            <p class="photo-caption">Frame from the first run: arm 1, arm 2 and a fine-liner pen drawing arcs on watercolour paper. Base not yet fixed down. Powered over USB from the laptop.</p>
+            <span class="photo-label">First run (video)</span>
+            <video controls playsinline preload="metadata" poster="images/exp01-arcs.jpg" aria-label="The paper arm on an Arduino drawing overlapping arcs on watercolour paper with a fine-liner pen">
+                <source src="videos/exp01-first-arcs.mp4" type="video/mp4">
+                <source src="videos/exp01-first-arcs.mov" type="video/quicktime">
+                Your browser can't play this video.
+            </video>
+            <p class="photo-caption">The first run: arm 1, arm 2 and a fine-liner pen drawing arcs on watercolour paper. Base not yet fixed down. Powered over USB from the laptop.</p>
         </div>
 
         <div class="session-metadata">
