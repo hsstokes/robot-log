@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Log | Heidi Stokes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+        :root { --ink: #1a1a1a; --paper: #f2ede8; --paper-mid: #e8e2da; --grid: #ddd8d2; --mid: #8a8580; --warm-border: #ccc7c0; }
+        * { box-sizing: border-box; max-width: 100%; }
+        html, body { overflow-x: hidden; width: 100%; }
+        body { font-family: 'IBM Plex Mono', 'Courier New', monospace; font-size: 13px; color: var(--ink); background-color: var(--paper); background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 28px 28px; padding: 20px; line-height: 1.7; margin: 0; }
+        .page-wrapper { max-width: 900px; width: 95%; margin: 10px auto; border: 1px solid var(--warm-border); border-radius: 4px; padding: 0; background-color: var(--paper); overflow: hidden; }
+        .page-container { width: 100%; margin: 0 auto; border: none; padding: 30px 25px; background-color: var(--paper); position: relative; overflow: hidden; }
+        h1, h2, h3, h4 { color: var(--ink); margin-bottom: 15px; word-wrap: break-word; }
+        h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 400; text-align: left; border: none; border-bottom: 2px solid var(--ink); padding: 0 0 20px; margin-bottom: 8px; line-height: 1.15; background: none; }
+        h2 { font-family: 'DM Serif Display', serif; font-size: 1.5em; font-weight: 400; text-align: left; border: none; background: none; padding: 0; margin: 2rem 0 1rem; line-height: 1.2; }
+        h3 { font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--mid); margin: 1.5rem 0 0.8rem; border: none; background: none; padding: 0; }
+        h4 { font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 0.08em; }
+        p { font-family: 'IBM Plex Mono', monospace; font-size: 0.88rem; color: var(--ink); background: none; border: none; padding: 0; margin: 0 0 1em; line-height: 1.8; word-wrap: break-word; }
+        a { color: var(--ink); text-decoration: underline; transition: opacity 0.2s; }
+        a:hover { opacity: 0.6; }
+        ul, ol { font-size: 0.85rem; line-height: 1.8; padding-left: 20px; margin: 0 0 1em; }
+        li { margin-bottom: 4px; }
+        .hero-title-bar { padding: 30px 0 25px; border-bottom: 1px solid var(--warm-border); margin-bottom: 25px; }
+        .hero-subtitle { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--mid); margin: 8px 0 0; letter-spacing: 0.12em; text-transform: uppercase; }
+        .artist-statement { border: none; border-left: 3px solid var(--ink); padding: 14px 0 14px 20px; margin: 25px 0; }
+        .artist-statement p { font-family: 'DM Serif Display', serif; font-size: 1.05em; font-style: italic; color: var(--ink); line-height: 1.75; margin: 0 0 0.8em; border: none; background: none; padding: 0; }
+        .artist-statement p:last-child { margin-bottom: 0; }
+        .nav-section { display: flex; justify-content: flex-start; gap: 6px; margin: 20px 0; padding: 10px 0; border-top: 1px solid var(--warm-border); border-bottom: 1px solid var(--warm-border); flex-wrap: wrap; position: sticky; top: 0; z-index: 100; background-color: var(--paper); }
+        .nav-button { background: none; border: 1px solid var(--warm-border); border-radius: 2px; padding: 4px 10px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; transition: all 0.2s; color: var(--mid); }
+        .nav-button:hover { border-color: var(--ink); color: var(--ink); }
+        .section-content { border-bottom: 1px solid var(--warm-border); padding: 25px 0; }
+        .section-title { font-family: 'DM Serif Display', serif; font-size: 1.4em; font-weight: 400; margin-bottom: 20px; color: var(--ink); border-bottom: 1px solid var(--warm-border); padding: 0 0 12px; background: none; }
+        .introduction { border-left: 3px solid var(--warm-border); padding: 0 0 0 20px; margin-bottom: 25px; }
+        .introduction p:last-child { margin-bottom: 0; }
+        .highlight-box { background: var(--paper-mid); border-left: 3px solid var(--ink); padding: 14px 18px; margin: 20px 0; }
+        .highlight-box h4 { margin: 0 0 8px 0; border-bottom: 1px solid var(--warm-border); padding-bottom: 8px; }
+        .highlight-box p { margin: 0 0 6px 0; font-size: 0.82rem; }
+        .highlight-box p:last-child { margin-bottom: 0; }
+        .highlight-box ul { margin: 0; font-size: 0.82rem; }
+        .quote { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.0em; padding: 14px 0 14px 20px; border-left: 3px solid var(--ink); margin: 20px 0; color: var(--ink); line-height: 1.75; }
+
+        /* index cards (same look as the punctuation page's mark cards) */
+        .entry-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-top: 20px; }
+        .entry-card { background: white; border: 1px solid var(--warm-border); border-radius: 3px; padding: 16px 14px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .entry-card:hover { border-color: var(--ink); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .entry-card.planned { cursor: default; opacity: 0.6; }
+        .entry-card.planned:hover { border-color: var(--warm-border); transform: none; box-shadow: none; }
+        .entry-num { font-family: 'DM Serif Display', serif; font-size: 2.2em; line-height: 1.1; margin-bottom: 6px; color: var(--ink); }
+        .entry-name { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.64rem; color: var(--ink); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+        .entry-status { font-size: 0.65rem; color: var(--paper); background: var(--ink); padding: 2px 8px; border-radius: 2px; display: inline-block; font-family: 'Space Mono', monospace; }
+        .entry-card.planned .entry-status { background: none; color: var(--mid); border: 1px solid var(--warm-border); }
+
+        /* one log entry (same structure as a punctuation exploration) */
+        .log-entry { border: 1px solid var(--warm-border); border-radius: 3px; margin-bottom: 30px; overflow: hidden; background: var(--paper); }
+        .log-header { display: flex; align-items: center; gap: 20px; padding: 20px 25px; background: var(--ink); flex-wrap: wrap; }
+        .log-badge { font-family: 'DM Serif Display', serif; font-size: 2.2em; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; background: var(--paper); color: var(--ink); border-radius: 50%; flex-shrink: 0; }
+        .log-info { flex: 1; min-width: 180px; }
+        .log-name { font-family: 'DM Serif Display', serif; font-size: 1.6em; font-weight: 400; color: var(--paper); margin: 0 0 4px 0; line-height: 1.2; }
+        .log-date { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: rgba(242,237,232,0.5); margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.1em; }
+        .log-status { font-family: 'Space Mono', monospace; display: inline-block; color: var(--paper); padding: 3px 10px; border-radius: 2px; font-size: 0.62rem; border: 1px solid rgba(242,237,232,0.3); text-transform: uppercase; letter-spacing: 0.08em; }
+        .log-body { padding: 20px; }
+        .photo-display { background: var(--ink); margin: 0 0 20px; overflow: hidden; }
+        .photo-label { font-family: 'Space Mono', monospace; font-weight: 700; color: rgba(242,237,232,0.4); padding: 12px 20px 0; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; display: block; }
+        .photo-display img { width: 100%; max-height: 520px; object-fit: cover; object-position: top; display: block; }
+        .photo-caption { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: rgba(242,237,232,0.45); font-style: italic; margin: 0; padding: 10px 20px 14px; background: var(--ink); line-height: 1.6; }
+        .session-metadata { background: var(--paper-mid); border-radius: 3px; padding: 10px 14px; margin: 0 0 18px; font-family: 'Space Mono', monospace; font-size: 0.62rem; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+        .metadata-item { display: flex; gap: 5px; }
+        .metadata-label { font-weight: 700; color: var(--ink); }
+        .metadata-value { color: var(--mid); }
+
+        /* toggles: same dark bar as the reflection toggles on the punctuation page */
+        details.log-toggle { border: 1px solid var(--warm-border); border-radius: 3px; margin: 12px 0; background: white; overflow: hidden; }
+        details.log-toggle > summary { background: var(--ink); color: var(--paper); padding: 10px 16px; cursor: pointer; list-style: none; font-family: 'Space Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        details.log-toggle > summary::-webkit-details-marker { display: none; }
+        details.log-toggle > summary::after { content: '+'; font-family: 'DM Serif Display', serif; font-size: 1.2em; transition: transform 0.2s; }
+        details.log-toggle[open] > summary::after { transform: rotate(45deg); }
+        details.log-toggle > summary:hover { background: #333; }
+        .log-content { padding: 16px; }
+        .log-content > p:last-child { margin-bottom: 0; }
+        .log-content h4 { margin-top: 18px; }
+        .log-content h4:first-child { margin-top: 0; }
+
+        /* tables */
+        .table-scroll { overflow-x: auto; margin: 0 0 14px; }
+        table.spec-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; min-width: 460px; }
+        .spec-table th { background: var(--ink); color: var(--paper); font-family: 'Space Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; text-align: left; padding: 8px 10px; font-weight: 700; }
+        .spec-table td { padding: 8px 10px; border-bottom: 1px solid var(--warm-border); vertical-align: top; line-height: 1.6; }
+        .spec-table tr:last-child td { border-bottom: none; }
+        .spec-table td:first-child { font-weight: 500; }
+        .wire-chip { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.35); margin-right: 6px; vertical-align: -1px; }
+
+        /* diagrams */
+        figure.diagram { margin: 0 0 18px; background: var(--paper); border: 1px solid var(--warm-border); border-radius: 3px; }
+        .diagram-scroll { overflow-x: auto; padding: 10px; }
+        .diagram-scroll svg { display: block; width: 100%; height: auto; margin: 0 auto; }
+        .diagram-scroll.wide svg { min-width: 640px; }
+        .diagram-scroll.narrow svg { max-width: 560px; min-width: 360px; }
+        figure.diagram figcaption { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--mid); padding: 8px 14px 10px; border-top: 1px solid var(--grid); line-height: 1.6; }
+        .scroll-hint { display: none; font-family: 'Space Mono', monospace; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.08em; color: #5f5a55; padding: 6px 14px 0; }
+        @media (max-width: 700px) { .scroll-hint { display: block; } }
+        ol.legend { list-style: none; padding: 0; counter-reset: leg; }
+        ol.legend li { counter-increment: leg; position: relative; padding-left: 32px; margin-bottom: 8px; font-size: 0.82rem; }
+        ol.legend li::before { content: counter(leg); position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: var(--paper); font-family: 'Space Mono', monospace; font-size: 0.62rem; font-weight: 700; text-align: center; line-height: 20px; }
+
+        /* code */
+        .code-box { border: 1px solid var(--ink); border-radius: 3px; margin: 0 0 18px; overflow: hidden; background: var(--ink); }
+        .code-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #333; }
+        .code-title { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(242,237,232,0.6); }
+        .code-copy { font-family: 'Space Mono', monospace; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.08em; background: none; color: var(--paper); border: 1px solid rgba(242,237,232,0.35); border-radius: 2px; padding: 3px 9px; cursor: pointer; }
+        .code-copy:hover { background: var(--paper); color: var(--ink); }
+        .code-box pre { margin: 0; padding: 14px; overflow-x: auto; font-family: 'Space Mono', 'Courier New', monospace; font-size: 0.72rem; line-height: 1.65; color: var(--paper); tab-size: 2; }
+        .code-note { font-size: 0.78rem; color: #5f5a55; margin: -8px 0 16px; }
+        code.inline { font-family: 'Space Mono', monospace; font-size: 0.8em; background: var(--paper-mid); padding: 1px 5px; border-radius: 2px; }
+
+        /* process steps */
+        .workflow-box { background: white; border: 1px solid var(--warm-border); border-radius: 3px; margin-bottom: 25px; overflow: hidden; }
+        .workflow-header { background: var(--ink); color: var(--paper); padding: 12px 20px; }
+        .workflow-header h4 { margin: 0; color: var(--paper); letter-spacing: 0.1em; }
+        .workflow-steps { padding: 0 20px; background: white; }
+        .step { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 5px 14px; padding: 16px 0; border-bottom: 1px solid var(--grid); }
+        .step:last-child { border-bottom: none; }
+        .step-number { width: 28px; height: 28px; background: var(--ink); color: var(--paper); border-radius: 50%; text-align: center; line-height: 28px; font-weight: 700; font-family: 'Space Mono', monospace; font-size: 0.72rem; flex-shrink: 0; }
+        .step-title { font-weight: 700; color: var(--ink); font-size: 0.78rem; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; align-self: center; }
+        .step-content { width: 100%; padding-left: 42px; margin-top: 4px; }
+        .step-content p { margin: 0 0 6px 0; font-size: 0.85rem; }
+        .step-content p:last-child { margin-bottom: 0; }
+        .step-content .fix { color: var(--ink); }
+        .step-content .fix strong, .step-content .problem strong { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; }
+        .step-content .problem { color: #5f5a55; }
+
+        /* reflection placeholders (as on the punctuation page) */
+        .analysis-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 14px; }
+        .analysis-card { background: var(--paper-mid); padding: 14px; border-left: 3px solid var(--warm-border); }
+        .analysis-title { font-family: 'Space Mono', monospace; font-weight: 700; color: var(--ink); margin: 0 0 6px 0; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; display: block; }
+        .analysis-card p { margin: 0; font-size: 0.82rem; color: var(--mid); }
+        @media (min-width: 600px) { .analysis-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .dotted-divider { border: none; border-top: 1px solid var(--warm-border); margin: 30px 0; }
+        footer { margin-top: 40px; border-top: 1px solid var(--warm-border); padding: 20px 0; }
+        .footer-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+        .footer-nav a { padding: 4px 10px; background: none; color: var(--mid); text-decoration: none; border: 1px solid var(--warm-border); border-radius: 2px; font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; transition: all 0.2s; }
+        .footer-nav a:hover { border-color: var(--ink); color: var(--ink); text-decoration: none; }
+        footer p { margin: 0 0 4px 0; font-size: 0.68rem; color: var(--mid); font-family: 'Space Mono', monospace; }
+        footer p a { color: var(--mid); }
+        @media (max-width: 768px) { body { padding: 12px; } .page-wrapper, .page-container { padding: 12px; width: 95%; } h1 { font-size: 1.6rem; } .nav-button { font-size: 0.58rem; padding: 4px 8px; } .log-badge { width: 64px; height: 64px; font-size: 1.8em; } .step-content { padding-left: 0; } }
+        @media (max-width: 480px) { body { padding: 8px; } .page-wrapper, .page-container { padding: 10px; } h1 { font-size: 1.3rem; } }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+<div class="page-container">
+
+<!-- HERO -->
+<section>
+    <div class="hero-title-bar">
+        <h1>Robot Log</h1>
+        <p class="hero-subtitle">Learning to build a drawing arm: parts, diagrams, wiring and code</p>
+    </div>
+    <div class="artist-statement">
+        <p>A working record of building a two-servo pen arm on an Arduino. Each entry notes what was made, what went wrong, what changed, and exactly how it is wired and coded, so it can be rebuilt.</p>
+        <p>The arm is groundwork for The Secret Lives of Punctuation. The aim is for it to draw punctuation marks from the conversation data on the same sheet as my own hand-drawn gestures, so the human marks and the machine's marks sit as two separate outcomes.</p>
+    </div>
+</section>
+
+<!-- NAVIGATION -->
+<nav class="nav-section">
+    <button class="nav-button" onclick="scrollToSection('aim')">Aim</button>
+    <button class="nav-button" onclick="scrollToSection('entries')">Entries</button>
+    <button class="nav-button" onclick="scrollToSection('exp01')">Experiment 01</button>
+    <button class="nav-button" onclick="scrollToSection('next')">Next</button>
+</nav>
+
+<main>
+
+<!-- AIM -->
+<section id="aim">
+    <div class="section-content">
+        <h2 class="section-title">Aim</h2>
+        <div class="introduction">
+            <p>To build a cheap, simple robotic arm from laminated watercolour paper, cut on a Cricut and driven by two small servos on an Arduino, and to learn the code and electronics needed to make it draw.</p>
+            <p>The arm is not meant to be precise. Its constraints (paper that flexes, loose joints, a pen that drags) act on whatever it is told to draw, and that gap between the instruction and the mark is part of what is being looked at.</p>
+        </div>
+        <div class="highlight-box">
+            <h4>Rules for the build</h4>
+            <ul>
+                <li>No soldering.</li>
+                <li>As cheap as possible, from one shop.</li>
+                <li>I write the code myself and use help to check it.</li>
+                <li>Log the mistakes as well as the results.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ENTRIES -->
+<section id="entries">
+    <div class="section-content">
+        <h2 class="section-title">Entries</h2>
+        <div class="entry-grid">
+            <div class="entry-card" onclick="scrollToSection('exp01')"><div class="entry-num">01</div><div class="entry-name">Two servos and a paper arm</div><div class="entry-status">Done</div></div>
+            <div class="entry-card planned"><div class="entry-num">02</div><div class="entry-name">Centre both servos, fix the base</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card planned"><div class="entry-num">03</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
+        </div>
+    </div>
+</section>
+
+<hr class="dotted-divider">
+
+<!-- EXPERIMENT 01 -->
+<section id="exp01">
+<div class="log-entry">
+    <div class="log-header">
+        <div class="log-badge">01</div>
+        <div class="log-info">
+            <div class="log-name">Two servos and a paper arm</div>
+            <p class="log-date">16 October 2026</p>
+            <span class="log-status">Both servos sweep. The arm draws arcs.</span>
+        </div>
+    </div>
+
+    <div class="log-body">
+
+        <div class="photo-display">
+            <span class="photo-label">First run</span>
+            <img src="images/exp01-arcs.jpg" alt="The paper arm on an Arduino drawing overlapping arcs on watercolour paper with a fine-liner pen">
+            <p class="photo-caption">Frame from the first run: arm 1, arm 2 and a fine-liner pen drawing arcs on watercolour paper. Base not yet fixed down. Powered over USB from the laptop.</p>
+        </div>
+
+        <div class="session-metadata">
+            <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3</span></div>
+            <div class="metadata-item"><span class="metadata-label">Software:</span><span class="metadata-value">Arduino IDE 2.3.10</span></div>
+            <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">2 x SG90 micro servo</span></div>
+            <div class="metadata-item"><span class="metadata-label">Pins:</span><span class="metadata-value">8 (servo 1), 9 (servo 2)</span></div>
+            <div class="metadata-item"><span class="metadata-label">Power:</span><span class="metadata-value">USB, 5 V</span></div>
+            <div class="metadata-item"><span class="metadata-label">Library:</span><span class="metadata-value">Servo</span></div>
+        </div>
+
+        <p>The first experiment was to get two servos moving and to see whether a paper arm built on them could hold a pen and make a mark. Both servos sweep, and with arm 1, arm 2 and a fine-liner in place the arm draws overlapping arcs. Nothing is calibrated yet and the base is not fixed down.</p>
+
+        <!-- MATERIALS -->
+        <details class="log-toggle">
+            <summary>Materials</summary>
+            <div class="log-content">
+                <div class="table-scroll">
+                <table class="spec-table">
+                    <thead><tr><th>Item</th><th>Qty</th><th>Notes</th><th>Cost</th></tr></thead>
+                    <tbody>
+                        <tr><td>Arduino Uno R3 with USB cable</td><td>1</td><td>USB-A to USB-B cable</td><td>£8.46</td></tr>
+                        <tr><td>SG90 micro servos</td><td>4 in pack, 2 used</td><td>Listed as SG90 with metal gears, so possibly MG90S</td><td>£7.29</td></tr>
+                        <tr><td>ELEGOO jumper wires, 120 pcs</td><td>1 pack</td><td>Male-to-female, male-to-male and female-to-female</td><td>£6.99</td></tr>
+                        <tr><td>Solderless breadboard, 400 points</td><td>1</td><td>Used for the + and − power rails</td><td>£4.99</td></tr>
+                        <tr><td>Moqinai M2 screw, nut and washer set, 1215 pcs</td><td>1 set</td><td>Socket-head cap screws, 4 to 20 mm, hex key included. Washers are spring (lock) washers.</td><td>£6.99</td></tr>
+                        <tr><td>300gsm watercolour paper, laminated</td><td>&ndash;</td><td>Arms and base plate, cut on a Cricut Air 2</td><td>already owned</td></tr>
+                        <tr><td>Fine-liner pen</td><td>1</td><td>Sits in a 9 mm hole in arm 2</td><td>already owned</td></tr>
+                        <tr><td>Wooden board and clip</td><td>1</td><td>Holds the paper still</td><td>already owned</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p>Bought items total £34.72. No soldering: a servo plug is three female sockets, so male-to-male jumpers join it to the breadboard or the Uno.</p>
+                <p>Tutorial followed for the first sweep: <a href="https://www.electronics-lab.com/project/using-sg90-servo-motor-arduino/" target="_blank" rel="noopener">Using an SG90 servo motor with Arduino (electronics-lab.com)</a>.</p>
+            </div>
+        </details>
+
+        <!-- STRUCTURE -->
+        <details class="log-toggle">
+            <summary>How it is built</summary>
+            <div class="log-content">
+                <figure class="diagram">
+                    <span class="scroll-hint">Swipe sideways to see the whole diagram</span><div class="diagram-scroll wide"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 84 760 216" role="img" aria-label="Side view of the arm: base plate on standoffs, servo 1 below it, arm 1 on its horn, servo 2 in arm 1, arm 2 on servo 2, pen through arm 2 to the paper"><line x1="20" y1="270" x2="740" y2="270" stroke="var(--mid)" stroke-width="2"/><text x="740" y="288" font-size="10" fill="var(--mid)" text-anchor="end" font-weight="400" font-family="'Space Mono', monospace">table / paper</text><rect x="75" y="214" width="28" height="56" fill="var(--paper-mid)" stroke="var(--mid)"/><rect x="285" y="214" width="28" height="56" fill="var(--paper-mid)" stroke="var(--mid)"/><rect x="63" y="206" width="255" height="8" fill="var(--paper-mid)" stroke="var(--ink)"/><rect x="150" y="190" width="80" height="72" fill="var(--ink)"/><rect x="126" y="198" width="128" height="8" fill="var(--ink)"/><text x="190" y="242" font-size="11" fill="var(--paper)" text-anchor="middle" font-weight="700" font-family="'Space Mono', monospace">servo 1</text><rect x="186" y="178" width="8" height="12" fill="#fff" stroke="var(--ink)"/><rect x="168" y="172" width="44" height="6" fill="#fff" stroke="var(--ink)"/><rect x="154" y="164" width="400" height="8" rx="4" fill="var(--paper-mid)" stroke="var(--ink)"/><rect x="188" y="157" width="4" height="21" fill="var(--mid)"/><rect x="183" y="153" width="14" height="4" fill="var(--mid)"/><rect x="405" y="148" width="80" height="72" fill="var(--ink)"/><rect x="381" y="156" width="128" height="8" fill="var(--ink)"/><text x="445" y="202" font-size="11" fill="var(--paper)" text-anchor="middle" font-weight="700" font-family="'Space Mono', monospace">servo 2</text><rect x="441" y="136" width="8" height="12" fill="#fff" stroke="var(--ink)"/><rect x="423" y="130" width="44" height="6" fill="#fff" stroke="var(--ink)"/><rect x="416" y="122" width="291" height="8" rx="4" fill="var(--paper-mid)" stroke="var(--ink)"/><rect x="443" y="115" width="4" height="21" fill="var(--mid)"/><rect x="438" y="111" width="14" height="4" fill="var(--mid)"/><rect x="676" y="96" width="12" height="30" fill="var(--ink)"/><rect x="676" y="126" width="12" height="140" fill="#fff" stroke="var(--ink)"/><polygon points="676,266 688,266 682,272" fill="var(--ink)"/><circle cx="340" cy="196" r="9" fill="var(--ink)"/><text x="340" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="var(--paper)" font-family="'Space Mono', monospace">1</text><circle cx="300" cy="146" r="9" fill="var(--ink)"/><text x="300" y="150" text-anchor="middle" font-size="11" font-weight="700" fill="var(--paper)" font-family="'Space Mono', monospace">2</text><circle cx="560" cy="100" r="9" fill="var(--ink)"/><text x="560" y="104" text-anchor="middle" font-size="11" font-weight="700" fill="var(--paper)" font-family="'Space Mono', monospace">3</text><circle cx="716" cy="150" r="9" fill="var(--ink)"/><text x="716" y="154" text-anchor="middle" font-size="11" font-weight="700" fill="var(--paper)" font-family="'Space Mono', monospace">4</text></svg></div>
+                    <figcaption>Side view of the stack, not to scale. Only the horns and arms turn; the servo bodies and the base plate stay still.</figcaption>
+                </figure>
+                <ol class="legend">
+                    <li><strong>Base plate</strong> on standoffs. Servo 1's body hangs through a window in it, with its tabs resting on top.</li>
+                    <li><strong>Arm 1</strong> (110 x 24 mm) on servo 1's horn. Servo 2 sits in a window at the far end, with its tabs resting on top of arm 1.</li>
+                    <li><strong>Arm 2</strong> (80 x 16 mm) on servo 2's horn.</li>
+                    <li><strong>Fine-liner pen</strong> through a 9 mm hole near the end of arm 2, tip on the paper. The pen stays down, so the line is continuous.</li>
+                </ol>
+
+                <h4>How the paper arm fixes to the servo</h4>
+                <figure class="diagram">
+                    <span class="scroll-hint">Swipe sideways to see the whole diagram</span><div class="diagram-scroll wide"><svg xmlns="http://www.w3.org/2000/svg" viewBox="110 140 600 280" role="img" aria-label="Close-up of a servo joint: screw, paper arm, horn, shaft, servo body and plate"><rect x="130" y="205" width="234" height="14" fill="var(--paper-mid)" stroke="var(--ink)"/><rect x="376" y="205" width="314" height="14" fill="var(--paper-mid)" stroke="var(--ink)"/><text x="140" y="197" font-size="12" fill="var(--ink)" text-anchor="start" font-weight="400" font-family="'Space Mono', monospace">paper arm</text><text x="560" y="197" font-size="11" fill="var(--mid)" text-anchor="end" font-weight="400" font-family="'Space Mono', monospace">hole 2.4 mm in the arm</text><rect x="290" y="219" width="160" height="14" fill="#fff" stroke="var(--ink)"/><rect x="340" y="233" width="60" height="16" fill="#fff" stroke="var(--ink)"/><rect x="366" y="170" width="8" height="75" fill="var(--mid)" stroke="var(--ink)"/><rect x="356" y="162" width="28" height="8" fill="var(--mid)" stroke="var(--ink)"/><rect x="360" y="249" width="20" height="26" fill="#eee" stroke="var(--ink)"/><rect x="270" y="275" width="200" height="130" fill="var(--ink)"/><rect x="225" y="318" width="290" height="12" fill="var(--ink)"/><rect x="140" y="330" width="130" height="14" fill="var(--paper-mid)" stroke="var(--ink)"/><rect x="470" y="330" width="130" height="14" fill="var(--paper-mid)" stroke="var(--ink)"/><text x="150" y="364" font-size="12" fill="var(--ink)" text-anchor="start" font-weight="400" font-family="'Space Mono', monospace">base plate</text><text x="370" y="345" font-size="11" fill="var(--paper)" text-anchor="middle" font-weight="700" font-family="'Space Mono', monospace">servo body</text><circle cx="420" cy="160" r="9" fill="var(--ink)"/><text x="420" y="164" text-anchor="middle" font-size="11" font-weight="700" fill="var(--paper)" font-family="'Space Mono', monospace">1</text><circle cx="255" cy="226" r="9" fill="var(--ink)"/><text x="255" y="230" text-anchor="middle" font-size="11" font-weight="700" fill="var(--paper)" font-family="'Space Mono', monospace">2</text><circle cx="420" cy="262" r="9" fill="var(--ink)"/><text x="420" y="266" text-anchor="middle" font-size="11" font-weight="700" fill="var(--paper)" font-family="'Space Mono', monospace">3</text><circle cx="560" cy="372" r="9" fill="var(--ink)"/><text x="560" y="376" text-anchor="middle" font-size="11" font-weight="700" fill="var(--paper)" font-family="'Space Mono', monospace">4</text></svg></div>
+                    <figcaption>Close-up of one joint, side view, not to scale.</figcaption>
+                </figure>
+                <ol class="legend">
+                    <li>The servo's own small silver screw goes down through the paper arm and the horn into the shaft. In the latest file the hole in the arm is 2.4 mm, so the screw head clamps the paper to the horn.</li>
+                    <li>The white plastic horn pushes onto the servo shaft. Choose the single-arm horn; the cross-shaped one gets in the way, and a two-arm horn can be trimmed.</li>
+                    <li>The shaft turns when the servo moves.</li>
+                    <li>The servo body hangs below the plate, with its tabs resting on top.</li>
+                </ol>
+
+                <h4>Measurements</h4>
+                <div class="table-scroll">
+                <table class="spec-table">
+                    <thead><tr><th>What</th><th>Size</th></tr></thead>
+                    <tbody>
+                        <tr><td>SG90 overall length, with tabs</td><td>32 mm</td></tr>
+                        <tr><td>SG90 body length</td><td>22 mm</td></tr>
+                        <tr><td>SG90 tab hole spacing</td><td>28 mm</td></tr>
+                        <tr><td>Window for a servo body</td><td>21.8 x 12.5 mm (snug fit, tested)</td></tr>
+                        <tr><td>Tab slots</td><td>3.6 x 2.2 mm, 14 mm either side of the window centre</td></tr>
+                        <tr><td>Layer-fastening holes</td><td>2.2 mm, for M2 6 mm screws</td></tr>
+                        <tr><td>Servo tab screws</td><td>M2 8 mm</td></tr>
+                        <tr><td>Horn-screw hole in the arms</td><td>2.4 mm (latest file)</td></tr>
+                        <tr><td>Pen hole in arm 2</td><td>9 mm</td></tr>
+                        <tr><td>One laminated layer of 300gsm paper</td><td>about 0.4 to 0.5 mm</td></tr>
+                        <tr><td>Layers per part</td><td>4 for the base plate and arm 1, 2 to 3 for arm 2</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p>Each layer is cut separately and then glued, with screws through the layer holes to keep them aligned. This worked better than cutting a glued stack.</p>
+            </div>
+        </details>
+
+        <!-- CUT FILE -->
+        <details class="log-toggle">
+            <summary>Cut file (Cricut)</summary>
+            <div class="log-content">
+                <figure class="diagram">
+                    <div class="diagram-scroll narrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175 140" role="img" aria-label="Cut file layout: arm 1, arm 2, pen-hole test strip, base plate and horn-screw hole test piece"><g fill="var(--ink)" fill-rule="evenodd" stroke="none"><path d="M17,5 H103 A12,12 0 0 1 115,17 V17 A12,12 0 0 1 103,29 H17 A12,12 0 0 1 5,17 V17 A12,12 0 0 1 17,5 ZM13.8,17 A1.2,1.2 0 1 0 16.2,17 A1.2,1.2 0 1 0 13.8,17 ZM80.1,10.75 H101.89999999999999 V23.25 H80.1 ZM76.3,15.9 H77.7 A1.1,1.1 0 0 1 78.8,17.0 V17.0 A1.1,1.1 0 0 1 77.7,18.1 H76.3 A1.1,1.1 0 0 1 75.2,17.0 V17.0 A1.1,1.1 0 0 1 76.3,15.9 ZM104.3,15.9 H105.7 A1.1,1.1 0 0 1 106.8,17.0 V17.0 A1.1,1.1 0 0 1 105.7,18.1 H104.3 A1.1,1.1 0 0 1 103.2,17.0 V17.0 A1.1,1.1 0 0 1 104.3,15.9 ZM27.9,11 A1.1,1.1 0 1 0 30.1,11 A1.1,1.1 0 1 0 27.9,11 ZM27.9,23 A1.1,1.1 0 1 0 30.1,23 A1.1,1.1 0 1 0 27.9,23 ZM51.9,11 A1.1,1.1 0 1 0 54.1,11 A1.1,1.1 0 1 0 51.9,11 ZM51.9,23 A1.1,1.1 0 1 0 54.1,23 A1.1,1.1 0 1 0 51.9,23 Z"/><path d="M13,36 H77 A8,8 0 0 1 85,44 V44 A8,8 0 0 1 77,52 H13 A8,8 0 0 1 5,44 V44 A8,8 0 0 1 13,36 ZM11.8,44 A1.2,1.2 0 1 0 14.2,44 A1.2,1.2 0 1 0 11.8,44 ZM73.5,44 A4.5,4.5 0 1 0 82.5,44 A4.5,4.5 0 1 0 73.5,44 ZM27.9,44 A1.1,1.1 0 1 0 30.1,44 A1.1,1.1 0 1 0 27.9,44 ZM51.9,44 A1.1,1.1 0 1 0 54.1,44 A1.1,1.1 0 1 0 51.9,44 Z"/><path d="M8,59 H76 A3,3 0 0 1 79,62 V72 A3,3 0 0 1 76,75 H8 A3,3 0 0 1 5,72 V62 A3,3 0 0 1 8,59 ZM10.0,67 A4.0,4.0 0 1 0 18.0,67 A4.0,4.0 0 1 0 10.0,67 ZM23.5,67 A4.5,4.5 0 1 0 32.5,67 A4.5,4.5 0 1 0 23.5,67 ZM37.0,67 A5.0,5.0 0 1 0 47.0,67 A5.0,5.0 0 1 0 37.0,67 ZM50.5,67 A5.5,5.5 0 1 0 61.5,67 A5.5,5.5 0 1 0 50.5,67 ZM64.0,67 A6.0,6.0 0 1 0 76.0,67 A6.0,6.0 0 1 0 64.0,67 Z"/><path d="M8,82 H72 A3,3 0 0 1 75,85 V129 A3,3 0 0 1 72,132 H8 A3,3 0 0 1 5,129 V85 A3,3 0 0 1 8,82 ZM29.1,100.75 H50.900000000000006 V113.25 H29.1 ZM25.3,105.9 H26.7 A1.1,1.1 0 0 1 27.8,107.0 V107.00000000000001 A1.1,1.1 0 0 1 26.7,108.10000000000001 H25.3 A1.1,1.1 0 0 1 24.2,107.00000000000001 V107.0 A1.1,1.1 0 0 1 25.3,105.9 ZM53.300000000000004,105.9 H54.7 A1.1,1.1 0 0 1 55.800000000000004,107.0 V107.00000000000001 A1.1,1.1 0 0 1 54.7,108.10000000000001 H53.300000000000004 A1.1,1.1 0 0 1 52.2,107.00000000000001 V107.0 A1.1,1.1 0 0 1 53.300000000000004,105.9 ZM10.9,89 A1.1,1.1 0 1 0 13.1,89 A1.1,1.1 0 1 0 10.9,89 ZM66.9,89 A1.1,1.1 0 1 0 69.1,89 A1.1,1.1 0 1 0 66.9,89 ZM10.9,125 A1.1,1.1 0 1 0 13.1,125 A1.1,1.1 0 1 0 10.9,125 ZM66.9,125 A1.1,1.1 0 1 0 69.1,125 A1.1,1.1 0 1 0 66.9,125 Z"/><path d="M83,100 H115 A3,3 0 0 1 118,103 V109 A3,3 0 0 1 115,112 H83 A3,3 0 0 1 80,109 V103 A3,3 0 0 1 83,100 ZM85.5,106 A1.0,1.0 0 1 0 87.5,106 A1.0,1.0 0 1 0 85.5,106 ZM92.4,106 A1.1,1.1 0 1 0 94.6,106 A1.1,1.1 0 1 0 92.4,106 ZM99.3,106 A1.2,1.2 0 1 0 101.7,106 A1.2,1.2 0 1 0 99.3,106 ZM106.2,106 A1.3,1.3 0 1 0 108.8,106 A1.3,1.3 0 1 0 106.2,106 ZM113.1,106 A1.4,1.4 0 1 0 115.9,106 A1.4,1.4 0 1 0 113.1,106 Z"/></g><text x="122" y="15" font-size="4" font-weight="700" fill="var(--ink)" font-family="'Space Mono', monospace">ARM 1</text><text x="122" y="20" font-size="3.4" fill="var(--mid)" font-family="'Space Mono', monospace">110 x 24 mm</text><text x="122" y="43" font-size="4" font-weight="700" fill="var(--ink)" font-family="'Space Mono', monospace">ARM 2</text><text x="122" y="48" font-size="3.4" fill="var(--mid)" font-family="'Space Mono', monospace">80 x 16 mm</text><text x="84" y="66" font-size="4" font-weight="700" fill="var(--ink)" font-family="'Space Mono', monospace">PEN-HOLE TEST</text><text x="84" y="71" font-size="3.4" fill="var(--mid)" font-family="'Space Mono', monospace">holes 8 to 12 mm</text><text x="80" y="90" font-size="4" font-weight="700" fill="var(--ink)" font-family="'Space Mono', monospace">BASE PLATE</text><text x="80" y="95" font-size="3.4" fill="var(--mid)" font-family="'Space Mono', monospace">70 x 50 mm</text><text x="80" y="119" font-size="4" font-weight="700" fill="var(--ink)" font-family="'Space Mono', monospace">HORN-SCREW TEST</text><text x="80" y="124" font-size="3.4" fill="var(--mid)" font-family="'Space Mono', monospace">holes 2.0 to 2.8 mm</text></svg></div>
+                    <figcaption>Cut file layout, version 5. The whole file is 120 x 140 mm.</figcaption>
+                </figure>
+
+                <h4>Cricut Design Space settings</h4>
+                <ul>
+                    <li>Design Space reads the millimetre values in the file as inches, so the upload comes in far too large.</li>
+                    <li>Select all, keep the padlock locked, and set the height to 5.51 in. The width follows.</li>
+                    <li>Check that the holes and windows show as empty, and do a test cut on scrap first.</li>
+                    <li>Mat: 12 x 12 in.</li>
+                </ul>
+
+                <h4>How the file changed</h4>
+                <div class="table-scroll">
+                <table class="spec-table">
+                    <thead><tr><th>Version</th><th>Change</th><th>Why</th></tr></thead>
+                    <tbody>
+                        <tr><td>v1</td><td>First file</td><td>Window sized from the servo's published dimensions</td></tr>
+                        <tr><td>v2</td><td>Windows 22.8 mm. Round tab holes replaced with 3.6 x 2.2 mm slots</td><td>Servo too loose in the window, and one tab hole lined up while the other did not</td></tr>
+                        <tr><td>v3</td><td>Windows 22.2 mm</td><td>Still loose</td></tr>
+                        <tr><td>Window test</td><td>Small test piece with four window sizes</td><td>Cut to find the fit rather than guess. 21.8 mm was the right one.</td></tr>
+                        <tr><td>v4</td><td>Windows 21.8 mm</td><td>Snug fit, servo body is 22 mm</td></tr>
+                        <tr><td>v5</td><td>Horn-screw hole 2.4 mm (was 6 mm). Added a test strip of holes from 2.0 to 2.8 mm</td><td>The 6 mm hole let the screw head drop through and the arm wobbled</td></tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- WIRING -->
+        <details class="log-toggle">
+            <summary>Wiring</summary>
+            <div class="log-content">
+                <figure class="diagram">
+                    <span class="scroll-hint">Swipe sideways to see the whole diagram</span><div class="diagram-scroll wide"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 420" role="img" aria-label="Wiring diagram: Uno pins 8 and 9 to the servo signal wires, Uno 5V to the plus rail, Uno GND to the minus rail, servo red wires to the plus rail, servo brown wires to the minus rail"><rect x="20" y="20" width="180" height="380" rx="6" fill="var(--paper-mid)" stroke="var(--ink)" stroke-width="1.5"/><text x="110" y="42" font-size="13" fill="var(--ink)" text-anchor="middle" font-weight="700" font-family="'Space Mono', monospace">ARDUINO UNO R3</text><text x="110" y="58" font-size="10" fill="var(--mid)" text-anchor="middle" font-weight="400" font-family="'Space Mono', monospace">(simplified)</text><text x="188" y="79" font-size="11" fill="var(--ink)" text-anchor="end" font-weight="700" font-family="'Space Mono', monospace">PIN 8</text><circle cx="200" cy="75" r="5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/><text x="188" y="194" font-size="11" fill="var(--ink)" text-anchor="end" font-weight="700" font-family="'Space Mono', monospace">5V</text><circle cx="200" cy="190" r="5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/><text x="188" y="229" font-size="11" fill="var(--ink)" text-anchor="end" font-weight="700" font-family="'Space Mono', monospace">GND</text><circle cx="200" cy="225" r="5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/><text x="188" y="354" font-size="11" fill="var(--ink)" text-anchor="end" font-weight="700" font-family="'Space Mono', monospace">PIN 9</text><circle cx="200" cy="350" r="5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/><rect x="300" y="186" width="220" height="8" fill="var(--paper)" stroke="#c0392b" stroke-width="1.5"/><rect x="300" y="221" width="220" height="8" fill="var(--paper)" stroke="#2f5fc0" stroke-width="1.5"/><text x="300" y="176" font-size="11" fill="#c0392b" text-anchor="start" font-weight="700" font-family="'Space Mono', monospace">+ RAIL (red line)</text><text x="300" y="247" font-size="11" fill="#2f5fc0" text-anchor="start" font-weight="700" font-family="'Space Mono', monospace">− RAIL (blue line)</text><text x="580" y="47" font-size="11" fill="var(--ink)" text-anchor="start" font-weight="700" font-family="'Space Mono', monospace">SERVO 1 · base</text><rect x="580" y="55" width="180" height="90" rx="3" fill="var(--ink)"/><text x="580" y="277" font-size="11" fill="var(--ink)" text-anchor="start" font-weight="700" font-family="'Space Mono', monospace">SERVO 2 · in arm 1</text><rect x="580" y="285" width="180" height="90" rx="3" fill="var(--ink)"/><text x="592" y="79" font-size="10" fill="var(--paper)" text-anchor="start" font-weight="400" font-family="'Space Mono', monospace">signal</text><text x="592" y="104" font-size="10" fill="var(--paper)" text-anchor="start" font-weight="400" font-family="'Space Mono', monospace">+5V</text><text x="592" y="129" font-size="10" fill="var(--paper)" text-anchor="start" font-weight="400" font-family="'Space Mono', monospace">GND</text><text x="592" y="304" font-size="10" fill="var(--paper)" text-anchor="start" font-weight="400" font-family="'Space Mono', monospace">GND</text><text x="592" y="329" font-size="10" fill="var(--paper)" text-anchor="start" font-weight="400" font-family="'Space Mono', monospace">+5V</text><text x="592" y="354" font-size="10" fill="var(--paper)" text-anchor="start" font-weight="400" font-family="'Space Mono', monospace">signal</text><path d="M200,75 L580,75" fill="none" stroke="var(--paper)" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path d="M200,75 L580,75" fill="none" stroke="#e8730c" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M580,100 L480,100 L480,190" fill="none" stroke="var(--paper)" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path d="M580,100 L480,100 L480,190" fill="none" stroke="#c0392b" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M580,125 L500,125 L500,225" fill="none" stroke="var(--paper)" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path d="M580,125 L500,125 L500,225" fill="none" stroke="#7a4a21" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M580,300 L460,300 L460,225" fill="none" stroke="var(--paper)" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path d="M580,300 L460,300 L460,225" fill="none" stroke="#7a4a21" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M580,325 L440,325 L440,190" fill="none" stroke="var(--paper)" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path d="M580,325 L440,325 L440,190" fill="none" stroke="#c0392b" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M200,350 L580,350" fill="none" stroke="var(--paper)" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path d="M200,350 L580,350" fill="none" stroke="#e8730c" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M200,190 L300,190" fill="none" stroke="var(--paper)" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path d="M200,190 L300,190" fill="none" stroke="#1a1a1a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M200,225 L300,225" fill="none" stroke="var(--paper)" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path d="M200,225 L300,225" fill="none" stroke="#e0b400" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="480" cy="190" r="4.5" fill="var(--ink)"/><circle cx="440" cy="190" r="4.5" fill="var(--ink)"/><circle cx="300" cy="190" r="4.5" fill="var(--ink)"/><circle cx="500" cy="225" r="4.5" fill="var(--ink)"/><circle cx="460" cy="225" r="4.5" fill="var(--ink)"/><circle cx="300" cy="225" r="4.5" fill="var(--ink)"/><text x="250" y="181" font-size="10" fill="var(--ink)" text-anchor="middle" font-weight="400" font-family="'Space Mono', monospace">black</text><text x="250" y="244" font-size="10" fill="#8a6d00" text-anchor="middle" font-weight="400" font-family="'Space Mono', monospace">yellow</text><text x="390" y="67" font-size="10" fill="#b85a08" text-anchor="middle" font-weight="400" font-family="'Space Mono', monospace">orange</text><text x="390" y="342" font-size="10" fill="#b85a08" text-anchor="middle" font-weight="400" font-family="'Space Mono', monospace">orange</text></svg></div>
+                    <figcaption>Wiring diagram. The Uno is simplified: pins 8 and 9 are on the digital header and 5V and GND on the power header. A wire that hops over a rail is not connected to it.</figcaption>
+                </figure>
+
+                <div class="table-scroll">
+                <table class="spec-table">
+                    <thead><tr><th>From</th><th>To</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="wire-chip" style="background:#e8730c"></span>Servo 1, orange (signal)</td><td>Uno digital pin 8</td></tr>
+                        <tr><td><span class="wire-chip" style="background:#c0392b"></span>Servo 1, red (+5 V)</td><td>Breadboard + rail (the red line)</td></tr>
+                        <tr><td><span class="wire-chip" style="background:#7a4a21"></span>Servo 1, brown (GND)</td><td>Breadboard − rail (the blue line)</td></tr>
+                        <tr><td><span class="wire-chip" style="background:#e8730c"></span>Servo 2, orange (signal)</td><td>Uno digital pin 9</td></tr>
+                        <tr><td><span class="wire-chip" style="background:#c0392b"></span>Servo 2, red (+5 V)</td><td>Breadboard + rail</td></tr>
+                        <tr><td><span class="wire-chip" style="background:#7a4a21"></span>Servo 2, brown (GND)</td><td>Breadboard − rail</td></tr>
+                        <tr><td><span class="wire-chip" style="background:#1a1a1a"></span>Black jumper, Uno 5V</td><td>Breadboard + rail</td></tr>
+                        <tr><td><span class="wire-chip" style="background:#e0b400"></span>Yellow jumper, Uno GND</td><td>Breadboard − rail</td></tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Notes</h4>
+                    <ul>
+                        <li>SG90 wire colours: brown is GND, red is +5 V, orange is the signal.</li>
+                        <li>Each servo plug is three female sockets, so each wire needs a male-to-male jumper to reach the breadboard or the Uno. The jumper colours do not matter.</li>
+                        <li>The Uno's power header, with the USB socket on the left, reads: IOREF, RESET, 3.3V, 5V, GND, GND, Vin.</li>
+                        <li>The breadboard rails are not connected to anything until the 5V and GND jumpers are in. Both servos take their power from the rails.</li>
+                        <li>Both servos run from the laptop's USB power. If they jitter or the Uno resets when both move, the next step is a separate battery pack for the servos with its ground joined to the Uno's GND. Never connect a battery pack to the Uno's 5V pin.</li>
+                    </ul>
+                </div>
+
+                <h4>Check before plugging in</h4>
+                <ul>
+                    <li>The 5V jumper goes to the + rail only, and the GND jumper to the − rail only.</li>
+                    <li>All three wires are in for each servo, and no red wire is in the − rail or brown wire in the + rail.</li>
+                    <li>Nothing connects the + rail to the − rail.</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- CODE -->
+        <details class="log-toggle">
+            <summary>Code</summary>
+            <div class="log-content">
+                <h4>Setting up the Arduino IDE</h4>
+                <ul>
+                    <li>Arduino IDE 2.3.10. Board: Arduino Uno. Select the USB port the Uno appears on.</li>
+                    <li>The sketches need the Servo library. The first upload failed with <code class="inline">Servo.h: No such file or directory</code>. Fix: Tools, Manage Libraries, search for "Servo" and install the one by Michael Margolis, Arduino.</li>
+                </ul>
+
+                <h4>Sketch 1: centre a servo</h4>
+                <div class="code-box">
+                    <div class="code-head"><span class="code-title">centre_servo.ino</span><button class="code-copy" type="button">Copy</button></div>
+                    <pre>#include &lt;Servo.h&gt;
+
+Servo servo;
+
+void setup() {
+  servo.attach(8);   // servo 1 signal wire is on pin 8
+  servo.write(90);   // go to the middle of the range
+}
+
+void loop() {
+  // nothing to repeat
+}</pre>
+                </div>
+                <p class="code-note">Sets servo 1 to 90 degrees, the middle of its range, so the horn can be fitted pointing the right way. Use this before putting the horn on.</p>
+
+                <h4>Sketch 2: two-servo test</h4>
+                <div class="code-box">
+                    <div class="code-head"><span class="code-title">two_servo_test.ino</span><button class="code-copy" type="button">Copy</button></div>
+                    <pre>#include &lt;Servo.h&gt;      // library for driving hobby servos
+
+Servo s1;                // servo 1 (base), signal on pin 8
+Servo s2;                // servo 2 (in arm 1), signal on pin 9
+
+void setup() {
+  s1.attach(8);
+  s2.attach(9);
+  s1.write(90);          // hold servo 1 in the middle
+  s2.write(90);
+}
+
+void loop() {
+  for (int a = 60; a &lt;= 120; a++) {   // sweep servo 2 from 60 to 120 degrees
+    s2.write(a);
+    delay(20);                        // wait 20 ms per degree
+  }
+  for (int a = 120; a &gt;= 60; a--) {   // and back again
+    s2.write(a);
+    delay(20);
+  }
+}</pre>
+                </div>
+                <p class="code-note">Holds servo 1 at 90 degrees and sweeps servo 2 between 60 and 120. At 20 ms per degree, each sweep takes about 1.2 seconds. This sketch was supplied by Claude for this test; the code that follows will be my own.</p>
+
+                <h4>Earlier sketch</h4>
+                <p>The first sweep, from the tutorial above: one servo on pin 8, sweeping from 10 to 180 degrees with a 15 ms delay per degree. Pin 8 is not a PWM pin and does not need to be, because the Servo library handles the timing. Saved as <code class="inline">sketch_oct13a</code>.</p>
+            </div>
+        </details>
+
+        <!-- WHAT HAPPENED -->
+        <div class="workflow-box" style="margin-top:20px;">
+            <div class="workflow-header"><h4>What happened, in order</h4></div>
+            <div class="workflow-steps">
+                <div class="step"><span class="step-number">1</span><span class="step-title">Plan and parts</span><div class="step-content"><p>On 13 October I worked out a two-servo arm from layered paper and ordered the Uno, servos, jumper wires, breadboard and M2 screws. Two servos, so the pen stays on the paper and the line is continuous. A third servo could later lift the pen.</p></div></div>
+                <div class="step"><span class="step-number">2</span><span class="step-title">The servo did not fit its window</span><div class="step-content"><p class="problem"><strong>Problem</strong> The window was too long, so the servo's tab holes lined up at one end but not the other.</p><p class="fix"><strong>Fix</strong> Shortened the window in steps (v2 to v4) and cut a small test piece with four window sizes. 21.8 mm was exactly right.</p></div></div>
+                <div class="step"><span class="step-number">3</span><span class="step-title">First sweep</span><div class="step-content"><p class="problem"><strong>Problem</strong> The first upload failed with <code class="inline">Servo.h: No such file or directory</code>.</p><p class="fix"><strong>Fix</strong> Installed the Servo library through Tools, Manage Libraries. The servo then swept.</p></div></div>
+                <div class="step"><span class="step-number">4</span><span class="step-title">The arm wobbled on the horn</span><div class="step-content"><p class="problem"><strong>Problem</strong> The hole for the horn screw was cut at 6 mm, so the screw head dropped through and the arm was loose.</p><p class="fix"><strong>Fix</strong> Reduced it to 2.4 mm in v5, so the screw head clamps the paper to the horn, and added a test strip of hole sizes from 2.0 to 2.8 mm.</p></div></div>
+                <div class="step"><span class="step-number">5</span><span class="step-title">Wiring the second servo</span><div class="step-content"><p class="problem"><strong>Problem</strong> The new servo's power wires went into the breadboard rails, but the rails were not yet connected to the Uno, and the feeder jumpers had gone into the wrong rows.</p><p class="fix"><strong>Fix</strong> Rewired from a table of eight connections (see Wiring): black jumper from 5V to the + rail, yellow from GND to the − rail, servo reds in the + rail, servo browns in the − rail, orange signals to pins 8 and 9. Both servos moved.</p></div></div>
+                <div class="step"><span class="step-number">6</span><span class="step-title">First arcs</span><div class="step-content"><p>With arm 1, arm 2 and a fine-liner in place, the arm drew overlapping arcs on the paper. The base was not fixed down, so it also moved slightly with the arm.</p></div></div>
+            </div>
+        </div>
+
+        <!-- REFLECTION -->
+        <div class="analysis-grid">
+            <div class="analysis-card"><span class="analysis-title">What I noticed</span><p>[Your observation]</p></div>
+            <div class="analysis-card"><span class="analysis-title">Question this raises</span><p>[Your observation]</p></div>
+        </div>
+
+    </div>
+</div>
+</section>
+
+<hr class="dotted-divider">
+
+<!-- NEXT -->
+<section id="next">
+    <div class="section-content">
+        <h2 class="section-title">Not yet tested, and next</h2>
+        <div class="highlight-box">
+            <h4>Still to test</h4>
+            <ul>
+                <li>Which horn-screw hole on the test strip (2.0 to 2.8 mm) fits, and whether the paper arm slips on the horn. If it does, a second M2 screw through a spare hole in the horn is the fallback.</li>
+                <li>Centring both servos at 90 degrees before fitting the horns.</li>
+                <li>Fixing the base to the board with thick double-sided foam pads or Blu Tack, with the paper clip and the wires kept outside the pen's reach.</li>
+                <li>How much clearance the servo bodies need below their tabs.</li>
+            </ul>
+        </div>
+        <div class="highlight-box">
+            <h4>Next steps</h4>
+            <ul>
+                <li>Learn how angles map to places on the page. The arm reaches about 13 cm from the base, a half-disc.</li>
+                <li>Python on the laptop reads <code class="inline">punctuation_data.csv</code> and sends instructions to the Uno over USB serial. The Uno only moves the servos.</li>
+                <li>Log the intended path next to what was actually drawn.</li>
+                <li>Later: a camera to look at the drawing, and a separate battery pack if the servos stutter.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="footer-nav">
+        <a href="#aim">Aim</a>
+        <a href="#entries">Entries</a>
+        <a href="#exp01">Experiment 01</a>
+        <a href="#next">Next</a>
+    </div>
+    <p><strong>Robot Log</strong></p>
+    <p>Hardware: Arduino Uno R3 | 2 x SG90 servo | Cricut Air 2 | 300gsm watercolour paper</p>
+    <p>Part of The Secret Lives of Punctuation and Living as Data</p>
+    <p>&copy; 2026 Heidi Stokes</p>
+</footer>
+
+</div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        window.scrollToSection = function(id) {
+            var element = document.getElementById(id);
+            if (element) element.scrollIntoView({behavior: "smooth", block: "start"});
+        };
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                var target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+        document.querySelectorAll('.code-copy').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var pre = btn.closest('.code-box').querySelector('pre');
+                try {
+                    navigator.clipboard.writeText(pre.textContent).then(function() {
+                        btn.textContent = 'Copied';
+                        setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+                    });
+                } catch (err) {
+                    btn.textContent = 'Select and copy';
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
