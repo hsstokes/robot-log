@@ -170,6 +170,7 @@
     <button class="nav-button" onclick="scrollToSection('aim')">Aim</button>
     <button class="nav-button" onclick="scrollToSection('entries')">Entries</button>
     <button class="nav-button" onclick="scrollToSection('exp01')">Experiment 01</button>
+    <button class="nav-button" onclick="scrollToSection('exp02')">Experiment 02</button>
     <button class="nav-button" onclick="scrollToSection('next')">Next</button>
 </nav>
 
@@ -210,8 +211,9 @@
         <h2 class="section-title">Entries</h2>
         <div class="entry-grid">
             <div class="entry-card" onclick="scrollToSection('exp01')"><div class="entry-num">01</div><div class="entry-name">Two servos and a paper arm</div><div class="entry-status">Done</div></div>
-            <div class="entry-card planned"><div class="entry-num">02</div><div class="entry-name">Centre both servos, fix the base</div><div class="entry-status">Planned</div></div>
-            <div class="entry-card planned"><div class="entry-num">03</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp02')"><div class="entry-num">02</div><div class="entry-name">Writing the code by hand</div><div class="entry-status">Done</div></div>
+            <div class="entry-card planned"><div class="entry-num">03</div><div class="entry-name">Centre both servos, fix the base</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card planned"><div class="entry-num">04</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
         </div>
     </div>
 </section>
@@ -492,6 +494,79 @@ void loop() {
 
 <hr class="dotted-divider">
 
+<!-- EXPERIMENT 02 -->
+<section id="exp02">
+<div class="log-entry">
+    <div class="log-header">
+        <div class="log-badge">02</div>
+        <div class="log-info">
+            <div class="log-name">Writing the code by hand</div>
+            <p class="log-date">18 October 2026</p>
+            <span class="log-status">Servo 2 working. Short marks.</span>
+        </div>
+    </div>
+    <div class="log-body">
+
+        <div class="highlight-box">
+            <h4>What I changed</h4>
+            <ul>
+                <li>Servo 2 did not move at first. The signal wires were on the wrong pins, so I swapped the two orange wires between pins 8 and 9, and the second arm worked.</li>
+                <li>I cut the sweep from 60 to 120 degrees down to 80 to 88 degrees, in steps of 4, with half a second at each. The arm now makes a short mark, roughly 1 mm per degree.</li>
+                <li>I wrote the sketch by hand from memory, in sections, and used help only to check it.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I learned</h4>
+            <ul>
+                <li>A <code class="inline">for</code> loop has three parts: where it starts, what must stay true for it to keep going, and the step. Counting up uses <code class="inline">&lt;=</code> and counting down uses <code class="inline">&gt;=</code>. The test is a question, not a direction.</li>
+                <li><code class="inline">attach(9)</code> says which pin the signal wire is on, and <code class="inline">write()</code> moves the servo.</li>
+                <li><code class="inline">Serial.begin(9600)</code> is the speed of the conversation with the computer, not a time. Timing comes from <code class="inline">delay()</code>, in milliseconds.</li>
+                <li><code class="inline">println</code> is print plus <code class="inline">ln</code>, for line. Every statement ends in a semicolon, and comments start with two slashes.</li>
+                <li>A servo has end stops, so I should find the safe range by stepping through angles and avoid the extremes.</li>
+                <li>With no way to lift the pen, every movement draws a line. A dot is the arm holding still, and a pen lift would need a third servo.</li>
+            </ul>
+        </div>
+
+        <p><strong>Mistakes along the way:</strong> a colon instead of a semicolon, the <code class="inline">&lt;=</code> and <code class="inline">&gt;=</code> the wrong way round (so the loop never ran), <code class="inline">printin</code> for <code class="inline">println</code>, and leaving out <code class="inline">attach</code>.</p>
+
+        <details class="log-toggle">
+            <summary>Code</summary>
+            <div class="log-content">
+                <div class="code-box">
+                    <div class="code-head"><span class="code-title">short_mark.ino</span><button class="code-copy" type="button">Copy</button></div>
+                    <pre>#include &lt;Servo.h&gt;  // library for driving hobby servos
+
+Servo s2; // servo 2 (in arm 1), signal on pin 9
+
+void setup () {
+  s2.attach(9);    // servo 2's signal wire is on pin 9
+  Serial.begin(9600);   // speed for sending numbers to the Serial Monitor/ fixed just a tool to make it talk
+}
+
+void loop() {
+  for ( int a = 80; a &lt;= 88; a += 4) { // up: 80, 84, 88 / start at 80, and keep going while a is 88 or less, adding 4 each time
+    s2.write(a);                       // move servo 2 to angle a
+    Serial.println(a);                 // show the angle in the Serial Monitor/print line short hand for println
+    delay(500);                        // wait half a second
+  }
+
+  for ( int a = 88; a &gt;=80; a -= 4) { // back down: 88, 84, 80 / start at 88, and keep going while a is 80 or more, subtracting 4 each time
+    s2.write(a);                      //write servo 2 to angle a
+    delay(500);                       // wait half a second and remember every ending use a semicolon not a colon
+  }
+}</pre>
+                </div>
+                <p class="code-note">Written by hand. Servo 2 steps up from 80 to 88 degrees and back, half a second at each step.</p>
+            </div>
+        </details>
+
+    </div>
+</div>
+</section>
+
+<hr class="dotted-divider">
+
 <!-- NEXT -->
 <section id="next">
     <div class="section-content">
@@ -503,6 +578,7 @@ void loop() {
                 <li>Centring both servos at 90 degrees before fitting the horns.</li>
                 <li>Fixing the base to the board with thick double-sided foam pads or Blu Tack, with the paper clip and the wires kept outside the pen's reach.</li>
                 <li>How much clearance the servo bodies need below their tabs.</li>
+                <li>An additional base for servo 2. It will need to be slightly taller and thinner than the first so the arm can still move, and it should add stability by letting the table take the weight of arm 2 and the pen instead of the paper arm.</li>
             </ul>
         </div>
         <div class="highlight-box">
@@ -524,6 +600,7 @@ void loop() {
         <a href="#aim">Aim</a>
         <a href="#entries">Entries</a>
         <a href="#exp01">Experiment 01</a>
+        <a href="#exp02">Experiment 02</a>
         <a href="#next">Next</a>
     </div>
     <p><strong>Robot Log</strong></p>
