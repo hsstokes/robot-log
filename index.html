@@ -171,6 +171,7 @@
     <button class="nav-button" onclick="scrollToSection('entries')">Entries</button>
     <button class="nav-button" onclick="scrollToSection('exp01')">Experiment 01</button>
     <button class="nav-button" onclick="scrollToSection('exp02')">Experiment 02</button>
+    <button class="nav-button" onclick="scrollToSection('exp03')">Experiment 03</button>
     <button class="nav-button" onclick="scrollToSection('next')">Next</button>
 </nav>
 
@@ -212,8 +213,9 @@
         <div class="entry-grid">
             <div class="entry-card" onclick="scrollToSection('exp01')"><div class="entry-num">01</div><div class="entry-name">Two servos and a paper arm</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp02')"><div class="entry-num">02</div><div class="entry-name">Writing the code by hand</div><div class="entry-status">Done</div></div>
-            <div class="entry-card planned"><div class="entry-num">03</div><div class="entry-name">Centre both servos, fix the base</div><div class="entry-status">Planned</div></div>
-            <div class="entry-card planned"><div class="entry-num">04</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp03')"><div class="entry-num">03</div><div class="entry-name">A raised base and the first loops</div><div class="entry-status">Done</div></div>
+            <div class="entry-card planned"><div class="entry-num">04</div><div class="entry-name">Finish the second base</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card planned"><div class="entry-num">05</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
         </div>
     </div>
 </section>
@@ -557,7 +559,107 @@ void loop() {
   }
 }</pre>
                 </div>
-                <p class="code-note">Written by hand. Servo 2 steps up from 80 to 88 degrees and back, half a second at each step.</p>
+                <p class="code-note">Copied first, then typed out by hand and checked. Servo 2 steps up from 80 to 88 degrees and back, half a second at each step.</p>
+            </div>
+        </details>
+
+    </div>
+</div>
+</section>
+
+<hr class="dotted-divider">
+
+<!-- EXPERIMENT 03 -->
+<section id="exp03">
+<div class="log-entry">
+    <div class="log-header">
+        <div class="log-badge">03</div>
+        <div class="log-info">
+            <div class="log-name">A raised base and the first loops</div>
+            <p class="log-date">20 October 2026</p>
+            <span class="log-status">Loops that drift along the page.</span>
+        </div>
+    </div>
+    <div class="log-body">
+
+        <div class="photo-display">
+            <span class="photo-label">Result (photo)</span>
+            <img src="images/exp03-drifting-loops.jpg" alt="Sweeping crescent shapes made of many nested pen loops on watercolour paper, with the paper arm and its two servos at the top of the sheet" style="max-height: 700px; object-fit: contain;">
+            <p class="photo-caption">Each sweep is a stack of loops, drawn by the sketch below, with the centre of servo 1 nudged on after every circle.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I changed</h4>
+            <ul>
+                <li>Arm 1 now has a 5 cm square block around servo 2, which holds the servo more firmly. A lower plate, 37 mm below it, will carry the weight on the table once the long screws arrive. The base plate for servo 1 was recut with the same servo opening.</li>
+                <li>Arm 2 is shorter, 45 mm from the horn hole to the pen hole instead of 65 mm. The pen hole is now 10 mm, because the 9 mm hole came out too small once cut. The screw holes moved along so the horn clears the first screw.</li>
+                <li>I copied the circle sketch, then typed it out again myself and worked through what each line does, fixing my own slips. I then added a line that moves the centre on after each circle.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I learned</h4>
+            <ul>
+                <li>Two servos only draw a loop when the arms are bent against each other. With the arms in line, the same code draws a thin sliver.</li>
+                <li><code class="inline">sin</code> and <code class="inline">cos</code> work in radians, so the angle is converted first. Using <code class="inline">cos</code> for one servo and <code class="inline">sin</code> for the other makes the loop.</li>
+                <li>The step size sets how smooth the circle is, and <code class="inline">delay()</code> sets how fast it is drawn. The nudge goes after the <code class="inline">for</code> loop, so it happens once per circle, not on every step.</li>
+                <li><code class="inline">writeMicroseconds()</code> wants microseconds, not degrees. It made very little difference here, so I went back to <code class="inline">write()</code>.</li>
+                <li>Small circles come out boxy. The servos move in whole degrees and have slack, and the pen drags. Bigger swings are rounder, and the roughness is part of the drawing.</li>
+                <li>Check the size in Design Space. A file with a blank margin scaled down and shrank the holes.</li>
+            </ul>
+        </div>
+
+        <p><strong>Mistakes along the way:</strong> a colon instead of a semicolon, a setting named twice, <code class="inline">cos</code> used for both servos, <code class="inline">=+</code> instead of <code class="inline">+=</code>, the wrong swing in one line, and degrees passed to <code class="inline">writeMicroseconds()</code>.</p>
+
+        <details class="log-toggle">
+            <summary>Code</summary>
+            <div class="log-content">
+                <div class="code-box">
+                    <div class="code-head"><span class="code-title">drifting_loops.ino</span><button class="code-copy" type="button">Copy</button></div>
+                    <pre>#include &lt;Servo.h&gt;
+// tells the Arduino to bring in the Servo library that's already installed
+
+Servo s1;  // servo 1 (the base), attached to pin 8
+Servo s2;  // servo 2 (in arm 1), attached to pin 9
+
+float start1 = 90;  // starting angle in degrees. float means it can have decimals, and it can be changed later
+float start2 = 84;
+float swing1 = 20;  // how far the servo moves either side of its start angle (degrees)
+float swing2 = 40;
+
+void setup () {
+  // runs once at the start
+  s1.attach(8);
+  s2.attach(9);
+  Serial.begin(9600);  // lets the Arduino send numbers to the Serial Monitor
+
+  s1.write(start1);  // move to the start angle (90 in this case)
+  s2.write(start2);  // move to the start angle (84 in this case)
+  delay(1000);       // wait one second (delay is in milliseconds)
+}
+
+void loop() {
+  // repeats forever
+
+  for (int t = 0; t &lt;= 360; t += 10) {  // t goes round the circle in steps of 10 degrees
+    float rad = radians(t);  // translates the angle t from degrees into radians
+
+    float a1 = start1 + swing1 * cos(rad);  // angle for servo 1: moves swing1 degrees either side of start1
+    float a2 = start2 + swing2 * sin(rad);  // angle for servo 2: sin instead of cos makes a loop, not just a line
+
+    s1.write(a1);
+    s2.write(a2);
+
+    Serial.println(a1);  // shows the angle in the Serial Monitor
+    delay(50);           // wait a twentieth of a second before the next step
+  }
+
+  start1 = start1 + 3;  // after each full circle, move the centre of servo 1 on by 3 degrees
+
+  delay(2000);          // wait 2 seconds before the next circle
+}</pre>
+                </div>
+                <p class="code-note">Copied first, then typed out by hand and checked. Servo 1 and servo 2 follow cos and sin to draw a loop, and the centre of servo 1 moves on 3 degrees after each one.</p>
             </div>
         </details>
 
@@ -578,12 +680,13 @@ void loop() {
                 <li>Centring both servos at 90 degrees before fitting the horns.</li>
                 <li>Fixing the base to the board with thick double-sided foam pads or Blu Tack, with the paper clip and the wires kept outside the pen's reach.</li>
                 <li>How much clearance the servo bodies need below their tabs.</li>
-                <li>An additional base for servo 2. It will need to be slightly taller and thinner than the first so the arm can still move, and it should add stability by letting the table take the weight of arm 2 and the pen instead of the paper arm.</li>
+                <li>The bottom plate of servo 2's base. The 50 mm M2 screws arrive on 26 October. Then check the 37 mm gap, and whether the nuts under the plate slide smoothly on the paper.</li>
             </ul>
         </div>
         <div class="highlight-box">
             <h4>Next steps</h4>
             <ul>
+                <li>Choose one punctuation mark, probably the full stop, and decide one rule that links the data to what the arm does.</li>
                 <li>Learn how angles map to places on the page. The arm reaches about 13 cm from the base, a half-disc.</li>
                 <li>Python on the laptop reads <code class="inline">punctuation_data.csv</code> and sends instructions to the Uno over USB serial. The Uno only moves the servos.</li>
                 <li>Log the intended path next to what was actually drawn.</li>
@@ -601,6 +704,7 @@ void loop() {
         <a href="#entries">Entries</a>
         <a href="#exp01">Experiment 01</a>
         <a href="#exp02">Experiment 02</a>
+        <a href="#exp03">Experiment 03</a>
         <a href="#next">Next</a>
     </div>
     <p><strong>Robot Log</strong></p>
