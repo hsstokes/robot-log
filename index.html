@@ -172,6 +172,7 @@
     <button class="nav-button" onclick="scrollToSection('exp01')">Experiment 01</button>
     <button class="nav-button" onclick="scrollToSection('exp02')">Experiment 02</button>
     <button class="nav-button" onclick="scrollToSection('exp03')">Experiment 03</button>
+    <button class="nav-button" onclick="scrollToSection('exp04')">Experiment 04</button>
     <button class="nav-button" onclick="scrollToSection('next')">Next</button>
 </nav>
 
@@ -214,8 +215,10 @@
             <div class="entry-card" onclick="scrollToSection('exp01')"><div class="entry-num">01</div><div class="entry-name">Two servos and a paper arm</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp02')"><div class="entry-num">02</div><div class="entry-name">Writing the code by hand</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp03')"><div class="entry-num">03</div><div class="entry-name">A raised base and the first loops</div><div class="entry-status">Done</div></div>
-            <div class="entry-card planned"><div class="entry-num">04</div><div class="entry-name">Finish the second base</div><div class="entry-status">Planned</div></div>
-            <div class="entry-card planned"><div class="entry-num">05</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp04')"><div class="entry-num">04</div><div class="entry-name">A shield and a pen lift</div><div class="entry-status">Done</div></div>
+            <div class="entry-card planned"><div class="entry-num">05</div><div class="entry-name">Finish the second base</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card planned"><div class="entry-num">06</div><div class="entry-name">Test the pen lift</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card planned"><div class="entry-num">07</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
         </div>
     </div>
 </section>
@@ -669,6 +672,103 @@ void loop() {
 
 <hr class="dotted-divider">
 
+<!-- EXPERIMENT 04 -->
+<section id="exp04">
+<div class="log-entry">
+    <div class="log-header">
+        <div class="log-badge">04</div>
+        <div class="log-info">
+            <div class="log-name">A shield and a pen lift</div>
+            <p class="log-date">20 October 2026</p>
+            <span class="log-status">Fewer wires. Pen lift built in paper, not yet moving.</span>
+        </div>
+    </div>
+    <div class="log-body">
+
+        <div class="session-metadata">
+            <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
+            <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">2 x SG90 in use, a third planned</span></div>
+            <div class="metadata-item"><span class="metadata-label">Pins:</span><span class="metadata-value">8 (servo 1), 9 (servo 2), 10 (servo 3, planned)</span></div>
+            <div class="metadata-item"><span class="metadata-label">Power:</span><span class="metadata-value">USB, 5 V</span></div>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I changed</h4>
+            <ul>
+                <li>The wires were the biggest problem, so I stacked a sensor expansion shield on top of the Uno. Each pin number on the shield is a row of three pins: S (signal), V (power) and G (ground). The servo plugs go straight in, with the orange wire on S, red in the middle and brown on G. The breadboard and the jumper wires are no longer needed.</li>
+                <li>Servo 1 is in row 8 and servo 2 in row 9, so the sketches did not change. I left the yellow jumper and the blue terminal on the shield alone, because the servos run from USB power.</li>
+                <li>Once a sketch is uploaded, it is stored on the Uno, so the arm can run from any USB power. Python reading the data over serial will need the laptop connected.</li>
+                <li>I started a pen lift: a third servo, planned for row 10, stood upright in a wall plate so that its horn swings in an upright plane and tilts a paper lever. A pen standing in the lever is lifted and lowered by it. Built in paper so far, not yet moved by the servo.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I learned</h4>
+            <ul>
+                <li>A servo lying flat can only sweep sideways, so it cannot press a pen down. Standing it upright, with its shaft pointing out of a wall plate, makes the horn swing up and down.</li>
+                <li>The lever is a flat plate in an upright plane, so a hole through it points sideways. A pen standing upright cannot go through a hole in the lever. It has to stand in a gap between two plates.</li>
+                <li>Joining parts with screws and a gap between them, which I did to the wall, makes a much sturdier structure than a single plate. The lever now follows the same idea.</li>
+                <li>Four layers of 300gsm paper are about 1.6 mm, so I can plan a thickness in layers.</li>
+                <li>A pen lift only needs a few millimetres of movement, so the lever only tilts a few degrees.</li>
+            </ul>
+        </div>
+
+        <p><strong>Mistakes along the way:</strong> the first idea for the lift was a cam on a flat servo, which only moves sideways. The first lever had a closed pen hole, which would have held the pen sideways, and I spotted that. My servo sat with its shaft left of centre when the lever file expected it on the right, so it needs turning 180 degrees. The small pen-guide plates had screw holes that did not line up with anything. The 10 mm screws I have are too short for the new joints, which need about 16 mm.</p>
+
+        <details class="log-toggle">
+            <summary>How the pen lift works</summary>
+            <div class="log-content">
+                <ol class="legend">
+                    <li><strong>Wall plate</strong> (4 layers). Servo 3 sits in a window in it, with its shaft pointing out of the front and its horn pointing right.</li>
+                    <li><strong>Horn screw</strong>, an M2 screw through the horn's far hole, slides in a slot in the lever.</li>
+                    <li><strong>Lever</strong>, hinged on a long screw through the lower-left corner hole of the wall, with spacer rings so it clears the wall. When the horn turns, the lever tilts.</li>
+                    <li><strong>Twin plates.</strong> The lever is two plates side by side, joined with screws and nuts as spacers, with a gap about the width of the pen plus half a millimetre. The back plate has the slot.</li>
+                    <li><strong>Pen</strong> stands in the gap between the plates, held between two screws either side of it.</li>
+                    <li><strong>Collars</strong>, one above and one below the plates, are fixed to the pen with about 1 to 2 mm of play. The top collar rests on the plates and is lifted by them. The pen's own weight puts it back on the paper.</li>
+                </ol>
+                <p class="code-note">Still to design: a mount for a guide stack that keeps the pen upright, and how the whole lift attaches to arm 2.</p>
+            </div>
+        </details>
+
+        <details class="log-toggle">
+            <summary>Parts and cut files</summary>
+            <div class="log-content">
+                <div class="table-scroll">
+                <table class="spec-table">
+                    <thead><tr><th>Part</th><th>Size</th><th>Notes</th></tr></thead>
+                    <tbody>
+                        <tr><td>Wall plate</td><td>70 x 58 mm, 4 layers</td><td>Servo window 21.8 x 12.5 mm, tab slots, four corner holes. Sheet of four: 14.4 x 12.0 cm in Design Space.</td></tr>
+                        <tr><td>Rear wall</td><td>Same outline as the wall</td><td>Joined to the front wall by screws, about 14 mm between the inner faces.</td></tr>
+                        <tr><td>Base</td><td>84 x 40 mm, 20 layers</td><td>Two slots 70.5 x 1.9 mm, 14 mm between the walls, four corner holes. Sheet of ten, cut twice: 17.2 x 21.6 cm.</td></tr>
+                        <tr><td>Lever, back plate</td><td>99.5 x 22 mm, 4 layers</td><td>Hinge hole, middle tie hole, 7 mm horn slot, two pen-side holes. Sheet of four: 9.95 x 10.0 cm.</td></tr>
+                        <tr><td>Lever, front plate</td><td>99.5 x 22 mm, 4 layers</td><td>As the back plate, without the slot. Same sheet size.</td></tr>
+                        <tr><td>Collars</td><td>40 x 26 mm, 4 layers each</td><td>10 mm pen hole. One above the lever and one below, both fixed to the pen.</td></tr>
+                        <tr><td>Spacer rings</td><td>6 mm across, M2 hole</td><td>On the hinge screw, between the wall and the lever.</td></tr>
+                        <tr><td>Screws</td><td>M2</td><td>The joints need about 16 mm. The 50 mm ones arrive between 26 October and 2 November.</td></tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </details>
+
+        <div class="workflow-box" style="margin-top:20px;">
+            <div class="workflow-header"><h4>What happened, in order</h4></div>
+            <div class="workflow-steps">
+                <div class="step"><span class="step-number">1</span><span class="step-title">Too many wires</span><div class="step-content"><p class="problem"><strong>Problem</strong> The breadboard and jumper wires were untidy, and would only get worse with a third servo.</p><p class="fix"><strong>Fix</strong> Bought a sensor shield that stacks on the Uno, with a row of three pins for every pin number.</p></div></div>
+                <div class="step"><span class="step-number">2</span><span class="step-title">Fitting the shield</span><div class="step-content"><p>The shield pushed onto the Uno, and both servos plugged straight into rows 8 and 9. They moved as before, with no other wiring.</p></div></div>
+                <div class="step"><span class="step-number">3</span><span class="step-title">Lifting the pen</span><div class="step-content"><p class="problem"><strong>Problem</strong> With no way to lift the pen, every movement draws a line. A flat servo cannot press down either.</p><p class="fix"><strong>Fix</strong> A third servo stood upright in a wall plate, so its horn swings in an upright plane and tilts a lever.</p></div></div>
+                <div class="step"><span class="step-number">4</span><span class="step-title">The wall and its frame</span><div class="step-content"><p>A single wall plate in a flat base looked fragile, so I put a second wall behind it, joined with screws that make a gap for the servo body. That held up well. The base now has two slots to match.</p></div></div>
+                <div class="step"><span class="step-number">5</span><span class="step-title">The lever</span><div class="step-content"><p class="problem"><strong>Problem</strong> A closed pen hole in an upright plate holds the pen sideways, and a notched single plate was too thin to hold the collar.</p><p class="fix"><strong>Fix</strong> Two plates with a gap, the pen between them, and a collar above and below.</p></div></div>
+                <div class="step"><span class="step-number">6</span><span class="step-title">Left open</span><div class="step-content"><p>Nothing has been moved by the third servo yet. The guide mount is not designed, and the servo needs turning round before the lever goes on.</p></div></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</section>
+
+<hr class="dotted-divider">
+
 <!-- NEXT -->
 <section id="next">
     <div class="section-content">
@@ -680,12 +780,15 @@ void loop() {
                 <li>Centring both servos at 90 degrees before fitting the horns.</li>
                 <li>Fixing the base to the board with thick double-sided foam pads or Blu Tack, with the paper clip and the wires kept outside the pen's reach.</li>
                 <li>How much clearance the servo bodies need below their tabs.</li>
+                <li>The pen lift: servo 3 turned so its shaft is right of centre, the lever swinging freely by hand, then moved by the servo on pin 10. Whether the collars lift and lower the pen cleanly, and whether 14 mm is enough between the walls for the servo body.</li>
                 <li>The bottom plate of servo 2's base. The 50 mm M2 screws arrive on 26 October. Then check the 37 mm gap, and whether the nuts under the plate slide smoothly on the paper.</li>
             </ul>
         </div>
         <div class="highlight-box">
             <h4>Next steps</h4>
             <ul>
+                <li>The bot decides how each mark is drawn: the gesture, the size, the speed and the number of passes. The data decides when. Each choice is logged with the model, the date and the prompt, and I write and learn the code.</li>
+                <li>Design a mount for the guide stack, and decide how the pen lift attaches to arm 2.</li>
                 <li>Choose one punctuation mark, probably the full stop, and decide one rule that links the data to what the arm does.</li>
                 <li>Learn how angles map to places on the page. The arm reaches about 13 cm from the base, a half-disc.</li>
                 <li>Python on the laptop reads <code class="inline">punctuation_data.csv</code> and sends instructions to the Uno over USB serial. The Uno only moves the servos.</li>
@@ -705,10 +808,11 @@ void loop() {
         <a href="#exp01">Experiment 01</a>
         <a href="#exp02">Experiment 02</a>
         <a href="#exp03">Experiment 03</a>
+        <a href="#exp04">Experiment 04</a>
         <a href="#next">Next</a>
     </div>
     <p><strong>Robot Log</strong></p>
-    <p>Hardware: Arduino Uno R3 | 2 x SG90 servo | Cricut Air 2 | 300gsm watercolour paper</p>
+    <p>Hardware: Arduino Uno R3 with sensor shield | 2 x SG90 servo (a third planned for the pen lift) | Cricut Air 2 | 300gsm watercolour paper</p>
     <p>Part of The Secret Lives of Punctuation and Living as Data</p>
     <p>&copy; 2026 Heidi Stokes</p>
 </footer>
