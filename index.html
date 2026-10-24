@@ -173,6 +173,7 @@
     <button class="nav-button" onclick="scrollToSection('exp02')">Experiment 02</button>
     <button class="nav-button" onclick="scrollToSection('exp03')">Experiment 03</button>
     <button class="nav-button" onclick="scrollToSection('exp04')">Experiment 04</button>
+    <button class="nav-button" onclick="scrollToSection('exp05')">Experiment 05</button>
     <button class="nav-button" onclick="scrollToSection('next')">Next</button>
 </nav>
 
@@ -216,8 +217,8 @@
             <div class="entry-card" onclick="scrollToSection('exp02')"><div class="entry-num">02</div><div class="entry-name">Writing the code by hand</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp03')"><div class="entry-num">03</div><div class="entry-name">A raised base and the first loops</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp04')"><div class="entry-num">04</div><div class="entry-name">A shield and a pen lift</div><div class="entry-status">Done</div></div>
-            <div class="entry-card planned"><div class="entry-num">05</div><div class="entry-name">Finish the second base</div><div class="entry-status">Planned</div></div>
-            <div class="entry-card planned"><div class="entry-num">06</div><div class="entry-name">Test the pen lift</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp05')"><div class="entry-num">05</div><div class="entry-name">The pen lift moves</div><div class="entry-status">Done</div></div>
+            <div class="entry-card planned"><div class="entry-num">06</div><div class="entry-name">Combine the lift with the arm</div><div class="entry-status">Planned</div></div>
             <div class="entry-card planned"><div class="entry-num">07</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
         </div>
     </div>
@@ -769,6 +770,109 @@ void loop() {
 
 <hr class="dotted-divider">
 
+<section id="exp05">
+<div class="log-entry">
+    <div class="log-header">
+        <div class="log-badge">05</div>
+        <div class="log-info">
+            <div class="log-name">The pen lift moves</div>
+            <p class="log-date">October 2026</p>
+            <span class="log-status">The lift raises and lowers the pen and makes a mark. Held together with masking tape until the long screws arrive.</span>
+        </div>
+    </div>
+    <div class="log-body">
+
+        <div class="session-metadata">
+            <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
+            <div class="metadata-item"><span class="metadata-label">Servo:</span><span class="metadata-value">1 x SG90, on its own, not yet on the arm</span></div>
+            <div class="metadata-item"><span class="metadata-label">Pin:</span><span class="metadata-value">10 (row 10 of the shield)</span></div>
+            <div class="metadata-item"><span class="metadata-label">Power:</span><span class="metadata-value">USB, 5 V</span></div>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I changed</h4>
+            <ul>
+                <li>I took the hinge away. The lever is now fixed to the horn with two small screws, one in each of two holes, and it turns with the horn about the servo shaft. The slot in the back plate is now only somewhere for the screws to sit.</li>
+                <li>The small holes in the horn were too small for my M2 screws, so I used smaller screws that fit them.</li>
+                <li>The head of the lever had a short flat underside, about 15 mm against 23 mm on top, so the lower collar holder would not sit flat. I redrew both lever plates so the underside is about 22 mm flat, and drew a longer lower holder with two short slots, 18 mm apart, so it can be moved a little to fit.</li>
+                <li>I wrote the up and down code myself.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I learned</h4>
+            <ul>
+                <li>Two loops that follow each other do different jobs from one loop inside another. My first attempt nested them, and the second loop never ran, because it started at a bigger number than it was allowed to count up to.</li>
+                <li>Counting down needs a minus (<code class="inline">a--</code>) and a test that checks for bigger-or-equal (<code class="inline">&gt;=</code>), not the other way round.</li>
+                <li>Opening the angle up from 100 to 130 did not make a harder mark. It only made the move slower. Cutting the delay from 20 to 5 did, because a faster move hits the paper harder. I had expected the opposite.</li>
+                <li>The up and down angles are two variables at the top of the sketch, <code class="inline">penUp</code> and <code class="inline">penDown</code>, so I can tune them without touching the loops. I settled on 80 and 100.</li>
+            </ul>
+        </div>
+
+        <div class="photo-display">
+            <span class="photo-label">Pen lift running (video)</span>
+            <video controls playsinline preload="metadata" poster="images/exp05-pen-lift.jpg" aria-label="The pen lift raising and lowering a fine-liner pen on watercolour paper, held together with masking tape">
+                <source src="videos/exp05-pen-lift.mp4" type="video/mp4">
+                Your browser can't play this video.
+            </video>
+            <p class="photo-caption">The pen lift on its own, not yet on the arm, held together with masking tape until the long screws arrive. The pen leans because the lever swings about the servo shaft, and the tip drags a little as it lands. I like the marks it makes.</p>
+        </div>
+
+        <p><strong>Mistakes along the way:</strong> the first sketch had a missing letter in a variable name, a colon where a semicolon belonged, and a double quote closed with a single one. I attached the servo to the wrong pin at first, and pin 9 turned out to be fine only because nothing else was plugged in for this test. Nothing is on the arm yet.</p>
+
+        <details class="log-toggle">
+            <summary>The code</summary>
+            <div class="log-content">
+                <div class="code-box"><div class="code-head"><span class="code-title">pen_lift_test.ino</span><button class="code-copy" type="button">Copy</button></div>
+                    <pre>#include &lt;Servo.h&gt;
+
+Servo lift;
+
+int penUp = 80;
+int penDown = 100;
+
+void setup() {
+  lift.attach(10);
+  Serial.begin(9600);
+  lift.write(penUp);
+  delay(1000);
+}
+
+void loop() {
+  for (int a = penUp; a &lt;= penDown; a++) {
+    lift.write(a);
+    delay(5);
+  }
+  Serial.println("down");
+  delay(1000);
+
+  for (int a = penDown; a &gt;= penUp; a--) {
+    lift.write(a);
+    delay(5);
+  }
+  Serial.println("up");
+  delay(1000);
+}</pre></div>
+                <p class="code-note">Delay of 20 was slow and made a faint mark. A delay of 5 gave a clear, solid mark.</p>
+            </div>
+        </details>
+
+        <div class="workflow-box" style="margin-top:20px;">
+            <div class="workflow-header"><h4>What happened, in order</h4></div>
+            <div class="workflow-steps">
+                <div class="step"><span class="step-number">1</span><span class="step-title">Fixing the lever to the horn</span><div class="step-content"><p class="problem"><strong>Problem</strong> The lever was going up and down without really being attached to the horn.</p><p class="fix"><strong>Fix</strong> A second screw in a second hole of the horn, both through the slot, so the lever turns with the horn.</p></div></div>
+                <div class="step"><span class="step-number">2</span><span class="step-title">The collar holder</span><div class="step-content"><p class="problem"><strong>Problem</strong> The lower collar would not sit flush on the bottom of the arm, which was 1.5 cm long against 2.3 cm on top.</p><p class="fix"><strong>Fix</strong> New plates with a flat underside, and a longer holder with slots. Not cut yet.</p></div></div>
+                <div class="step"><span class="step-number">3</span><span class="step-title">The first run</span><div class="step-content"><p>After fixing the code, the lever lifted and lowered by 20 degrees. At first the mark was faint and the move was slow.</p></div></div>
+                <div class="step"><span class="step-number">4</span><span class="step-title">Making the mark solid</span><div class="step-content"><p>Raising the angle to 130 did not help, so I put it back to 100 and shortened the delay to 5. The pen hit the paper harder and left a definite mark.</p></div></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</section>
+
+<hr class="dotted-divider">
+
 <!-- NEXT -->
 <section id="next">
     <div class="section-content">
@@ -780,7 +884,7 @@ void loop() {
                 <li>Centring both servos at 90 degrees before fitting the horns.</li>
                 <li>Fixing the base to the board with thick double-sided foam pads or Blu Tack, with the paper clip and the wires kept outside the pen's reach.</li>
                 <li>How much clearance the servo bodies need below their tabs.</li>
-                <li>The pen lift: servo 3 turned so its shaft is right of centre, the lever swinging freely by hand, then moved by the servo on pin 10. Whether the collars lift and lower the pen cleanly, and whether 14 mm is enough between the walls for the servo body.</li>
+                <li>The pen lift with the proper long screws in place and the new v18 plates. Whether the head sits flat, whether the two collars hold the pen upright, and whether the lever sags when it is hanging off the horn with the pen in it.</li>
                 <li>The bottom plate of servo 2's base. The 50 mm M2 screws arrive on 26 October. Then check the 37 mm gap, and whether the nuts under the plate slide smoothly on the paper.</li>
             </ul>
         </div>
@@ -788,7 +892,7 @@ void loop() {
             <h4>Next steps</h4>
             <ul>
                 <li>The bot decides how each mark is drawn: the gesture, the size, the speed and the number of passes. The data decides when. Each choice is logged with the model, the date and the prompt, and I write and learn the code.</li>
-                <li>Design a mount for the guide stack, and decide how the pen lift attaches to arm 2.</li>
+                <li>When the 50 mm screws arrive, finish the lift properly and take photos and a video. Then design the third machine, which joins the lift to the two-servo arm. The lift may be too heavy for arm 2, so arm 2 may need to be shorter, or the lift lighter.</li>
                 <li>Choose one punctuation mark, probably the full stop, and decide one rule that links the data to what the arm does.</li>
                 <li>Learn how angles map to places on the page. The arm reaches about 13 cm from the base, a half-disc.</li>
                 <li>Python on the laptop reads <code class="inline">punctuation_data.csv</code> and sends instructions to the Uno over USB serial. The Uno only moves the servos.</li>
@@ -809,6 +913,7 @@ void loop() {
         <a href="#exp02">Experiment 02</a>
         <a href="#exp03">Experiment 03</a>
         <a href="#exp04">Experiment 04</a>
+        <a href="#exp05">Experiment 05</a>
         <a href="#next">Next</a>
     </div>
     <p><strong>Robot Log</strong></p>
