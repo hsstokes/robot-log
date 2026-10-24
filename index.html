@@ -218,7 +218,7 @@
             <div class="entry-card" onclick="scrollToSection('exp03')"><div class="entry-num">03</div><div class="entry-name">A raised base and the first loops</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp04')"><div class="entry-num">04</div><div class="entry-name">A shield and a pen lift</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp05')"><div class="entry-num">05</div><div class="entry-name">The pen lift moves</div><div class="entry-status">Done</div></div>
-            <div class="entry-card planned"><div class="entry-num">06</div><div class="entry-name">Combine the lift with the arm</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card planned"><div class="entry-num">06</div><div class="entry-name">Redesign the third machine</div><div class="entry-status">Planned</div></div>
             <div class="entry-card planned"><div class="entry-num">07</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
         </div>
     </div>
@@ -923,7 +923,7 @@ void loop() {
             <h4>Next steps</h4>
             <ul>
                 <li>The bot decides how each mark is drawn: the gesture, the size, the speed and the number of passes. The data decides when. Each choice is logged with the model, the date and the prompt, and I write and learn the code.</li>
-                <li>When the 50 mm screws arrive, fix the two collars to the lever, then take photos and a video. Then design the third machine, which attaches the lift to the second servo on the two-servo arm. The lift may be too heavy for arm 2, so arm 2 may need to be shorter, or the lift lighter.</li>
+                <li>When the 50 mm screws arrive, fix the two collars to the lever, then take photos and a video. Then redesign the third machine, taking the best of each: the two-servo arm for reach and the lift for raising the pen. They cannot simply be joined, so it is a new design, with the base raised so the pen comes down vertically.</li>
                 <li>Choose one punctuation mark, probably the full stop, and decide one rule that links the data to what the arm does.</li>
                 <li>Learn how angles map to places on the page. The arm reaches about 13 cm from the base, a half-disc.</li>
                 <li>Python on the laptop reads <code class="inline">punctuation_data.csv</code> and sends instructions to the Uno over USB serial. The Uno only moves the servos.</li>
