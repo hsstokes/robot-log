@@ -174,6 +174,7 @@
     <button class="nav-button" onclick="scrollToSection('exp03')">Experiment 03</button>
     <button class="nav-button" onclick="scrollToSection('exp04')">Experiment 04</button>
     <button class="nav-button" onclick="scrollToSection('exp05')">Experiment 05</button>
+    <button class="nav-button" onclick="scrollToSection('exp06')">Experiment 06</button>
     <button class="nav-button" onclick="scrollToSection('next')">Next</button>
 </nav>
 
@@ -218,7 +219,7 @@
             <div class="entry-card" onclick="scrollToSection('exp03')"><div class="entry-num">03</div><div class="entry-name">A raised base and the first loops</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp04')"><div class="entry-num">04</div><div class="entry-name">A shield and a pen lift</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp05')"><div class="entry-num">05</div><div class="entry-name">The pen lift moves</div><div class="entry-status">Done</div></div>
-            <div class="entry-card planned"><div class="entry-num">06</div><div class="entry-name">Redesign the third machine</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp06')"><div class="entry-num">06</div><div class="entry-name">Three servos: the arm and the pen lift together</div><div class="entry-status">Done</div></div>
             <div class="entry-card planned"><div class="entry-num">07</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
         </div>
     </div>
@@ -357,8 +358,8 @@
                 <table class="spec-table">
                     <thead><tr><th>Part</th><th>Design Space size</th><th>Notes</th><th>File</th></tr></thead>
                     <tbody>
-                        <tr><td>Base plate (servo 1)</td><td>16.0 x 11.4 cm</td><td>4 plates, each 70 x 50 mm, with a 21.8 x 12.5 mm window, tab slots and four corner holes. Cut once for 4 layers.</td><td><a href="cutfiles/pen_arm_cut_file_v6_base_x4.svg" download>pen_arm_cut_file_v6_base_x4.svg</a></td></tr>
-                        <tr><td>Arm 1 with its block layer, plus bottom plate</td><td>12.0 x 11.7 cm</td><td>Arm 1 is joined to a 50 x 50 mm block with the window for servo 2, so it is cut as one piece. The 50 x 50 mm plate below it has four corner holes only.</td><td><a href="cutfiles/pen_arm_cut_file_v6_block.svg" download>pen_arm_cut_file_v6_block.svg</a></td></tr>
+                        <tr><td>Base plate (servo 1)</td><td>15.0 x 10.4 cm</td><td>4 plates, each 70 x 50 mm, with a 21.8 x 12.5 mm window, tab slots and four corner holes. Cut once for 4 layers.</td><td><a href="cutfiles/pen_arm_cut_file_v6_base_x4.svg" download>pen_arm_cut_file_v6_base_x4.svg</a></td></tr>
+                        <tr><td>Arm 1 with its block layer, plus bottom plate</td><td>11.0 x 10.7 cm</td><td>Arm 1 is joined to a 50 x 50 mm block with the window for servo 2, so it is cut as one piece. The 50 x 50 mm plate below it has four corner holes only.</td><td><a href="cutfiles/pen_arm_cut_file_v6_block.svg" download>pen_arm_cut_file_v6_block.svg</a></td></tr>
                         <tr><td>Arm 2, shortened</td><td>6.1 x 8.2 cm</td><td>4 plates, each 61 x 16 mm, with a 10 mm pen hole. Shorter than the first 80 mm arm.</td><td><a href="cutfiles/pen_arm_cut_file_v9_arm2_short_x4_hole10.svg" download>pen_arm_cut_file_v9_arm2_short_x4_hole10.svg</a></td></tr>
                     </tbody>
                 </table>
@@ -904,6 +905,166 @@ void loop() {
 
 <hr class="dotted-divider">
 
+<section id="exp06">
+<div class="log-entry">
+    <div class="log-header">
+        <div class="log-badge">06</div>
+        <div class="log-info">
+            <div class="log-name">Three servos: the arm and the pen lift together</div>
+            <p class="log-date">30 October 2026</p>
+            <span class="log-status">Built and drawing. All three servos move, one after the other. The same stroke repeats, so the ink piles up.</span>
+        </div>
+    </div>
+    <div class="log-body">
+
+        <div class="photo-display">
+            <span class="photo-label">Machine 3 running (video)</span>
+            <video controls playsinline preload="metadata" poster="images/exp06-machine3.jpg" aria-label="The third drawing machine: a paper arm with a pen lift on its end, drawing and lifting a fine-liner pen on watercolour paper clipped to a board">
+                <source src="videos/exp06-machine3-drawing.mp4" type="video/mp4">
+                Your browser can't play this video.
+            </video>
+            <p class="photo-caption">Machine 3 running the code below, about 30 seconds. The pen goes down, servo 2 and then servo 1 carry it across the paper, the pen lifts, and both servos return. It repeats the same path every time, so the ink builds up into a dense band with the thin marks of earlier runs fanning out beneath it.</p>
+        </div>
+
+        <div class="session-metadata">
+            <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
+            <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">3 x SG90</span></div>
+            <div class="metadata-item"><span class="metadata-label">Pins:</span><span class="metadata-value">8 (servo 1, base), 9 (servo 2, elbow), 10 (servo 3, pen lift)</span></div>
+            <div class="metadata-item"><span class="metadata-label">Power:</span><span class="metadata-value">USB, 5 V</span></div>
+            <div class="metadata-item"><span class="metadata-label">Reach:</span><span class="metadata-value">pen about 204 mm from servo 1, 128 mm from servo 2</span></div>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I built</h4>
+            <ul>
+                <li>I started afresh instead of adding to machines 1 and 2, reusing what worked: the base and arm 1 from the two-servo arm, and the wall, lever and collars from the pen lift.</li>
+                <li>The block at the end of arm 1 stands on four long screws, with a 50 x 50 mm foot plate underneath. That raises servo 2 so its horn sits level, and keeps the weight of the lift from hanging only on the horn.</li>
+                <li>The carriage is a floor on servo 2's horn with a slotted top on it, 12 layers, with two slits for the walls. I added the slits because a separate stand was going to be too heavy. Four screws and nuts hold it together, and the walls stand in the slits.</li>
+                <li>Servo 3 sits between the two walls and lifts the pen, exactly as in Experiment 05.</li>
+                <li>Servo 1 turns the whole arm, servo 2 is the elbow, and servo 3 lifts the pen.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I learned</h4>
+            <ul>
+                <li>The code runs in the order I write it, in real time. One loop finishes before the next one starts, so the order of the loops is the order the machine moves. Nesting a loop inside another, as I would for a grid in p5.js, ran the whole pen lift for every single degree of the arm. Putting the loops one after another fixed it.</li>
+                <li>Pen down, then the arm moves, then pen up. Without that order the pen only touched the paper after the arm had stopped.</li>
+                <li>A loop that counts down needs <code class="inline">&gt;=</code> and <code class="inline">--</code>. My return loop for servo 1 started with <code class="inline">c &lt;= 50</code> while counting down from 90, so it was false straight away and never ran. Servo 1 never came back, and each cycle began with a fast jump.</li>
+                <li>The angles in <code class="inline">setup()</code> have to match where the loop starts, or the first cycle jumps while the pen is on the paper. I fixed it by moving the ranges so they start and end at 90, the same as <code class="inline">setup()</code>.</li>
+                <li>Servo 1 only seemed to move a little at first because my sketch never wrote to it again after <code class="inline">setup()</code>. Adding its own loops made it move.</li>
+                <li>With <code class="inline">penUp</code> at 85 and <code class="inline">penDown</code> at 100 the lever only swings 15 degrees, and the pen barely clears the paper. 80 and 100 gave 20 degrees in Experiment 05. The pen also tilts as the lever swings about its hinge, so it needs some margin.</li>
+                <li>Servo 2's swing is limited by the four long screws, to about 62 to 118 degrees if the screw tops stick up. I kept both servos to 90 to 110, well inside that.</li>
+                <li>The loop repeats exactly, so the same stroke goes over itself and the ink builds up. To get different marks, the numbers have to change from one cycle to the next.</li>
+            </ul>
+        </div>
+
+        <p><strong>Mistakes along the way:</strong> a missing space in <code class="inline">intb</code>, the wrong letter (<code class="inline">a</code> for <code class="inline">b</code>) in a loop's test and step, <code class="inline">delat</code> for <code class="inline">delay</code>, <code class="inline">s1.write(90)</code> written twice when the second should have been <code class="inline">s2</code>, and one missing <code class="inline">{</code> that left the last lines outside <code class="inline">loop()</code>. Most were caught by reading the sketch line by line against the loop above it.</p>
+
+        <details class="log-toggle">
+            <summary>The code</summary>
+            <div class="log-content">
+                <div class="code-box"><div class="code-head"><span class="code-title">machine3_arm_and_lift.ino</span><button class="code-copy" type="button">Copy</button></div>
+                    <pre>#include &lt;Servo.h&gt;
+
+Servo lift;
+Servo s1;
+Servo s2;
+
+int penUp = 85;
+int penDown = 100;
+
+void setup() {
+  s1.attach(8);
+  s2.attach(9);
+  s1.write(90);
+  s2.write(90);
+
+  lift.attach(10);
+  Serial.begin(9600);
+  lift.write(penUp);
+  delay(1000);
+}
+
+void loop() {
+  for (int a = penUp; a &lt;= penDown; a++) {   // pen down
+    lift.write(a);
+    delay(5);
+  }
+
+  for (int b = 90; b &lt;= 110; b++) {          // servo 2 moves the pen
+    s2.write(b);
+    delay(20);
+  }
+
+  for (int c = 90; c &lt;= 110; c++) {          // then servo 1
+    s1.write(c);
+    delay(10);
+  }
+
+  for (int a = penDown; a &gt;= penUp; a--) {   // pen up
+    lift.write(a);
+    delay(5);
+  }
+
+  for (int b = 110; b &gt;= 90; b--) {          // servo 2 comes back
+    s2.write(b);
+    delay(20);
+  }
+
+  for (int c = 110; c &gt;= 90; c--) {          // servo 1 comes back
+    s1.write(c);
+    delay(10);
+  }
+
+  Serial.println("down");
+  delay(1000);
+
+  Serial.println("up");
+  delay(1000);
+}</pre></div>
+                <p class="code-note">Each loop does one job and closes before the next one starts. Servo 2 and servo 1 move one after the other, not together, so the stroke is two short lines joined, not one diagonal. The two <code class="inline">Serial.println</code> lines print after the whole movement, so they do not match what the pen is doing. To move both servos at once, both <code class="inline">write</code> lines can go in one loop, because the two ranges have the same number of steps. Not tried yet.</p>
+            </div>
+        </details>
+
+        <details class="log-toggle">
+            <summary>Cut files (machine 3, SVG for Cricut Design Space)</summary>
+            <div class="log-content">
+                <div class="table-scroll">
+                <table class="spec-table">
+                    <thead><tr><th>Part</th><th>Design Space size</th><th>Notes</th></tr></thead>
+                    <tbody>
+                        <tr><td>Base plate (servo 1)</td><td>15.0 x 10.4 cm</td><td>4 plates, cut once.</td></tr>
+                        <tr><td>Arm 1 with block and bottom plate</td><td>11.0 x 10.7 cm</td><td>Arm 1 joined to the block that holds servo 2, with the foot plate.</td></tr>
+                        <tr><td>Carriage floor</td><td>12.8 x 17.8 cm</td><td>4 plates, cut once. Sits on servo 2's horn.</td></tr>
+                        <tr><td>Slotted top</td><td>17.2 x 12.8 cm</td><td>6 plates, cut twice for 12 layers, with two slits for the walls.</td></tr>
+                        <tr><td>Wall</td><td>14.4 x 12.0 cm</td><td>4 plates, cut twice for the front and rear walls.</td></tr>
+                        <tr><td>Pen collars</td><td>8.2 x 11.0 cm</td><td>8 plates, two stacks of 4.</td></tr>
+                        <tr><td>Lever, back plate (with slot)</td><td>10.26 x 13.08 cm</td><td>4 plates.</td></tr>
+                        <tr><td>Lever, front plate (no slot)</td><td>10.26 x 13.08 cm</td><td>4 plates.</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p class="code-note">Design Space reads the size of the artwork, not the canvas. Import each file with lock proportions on and check the size matches this table.</p>
+            </div>
+        </details>
+
+        <div class="workflow-box" style="margin-top:20px;">
+            <div class="workflow-header"><h4>What happened, in order</h4></div>
+            <div class="workflow-steps">
+                <div class="step"><span class="step-number">1</span><span class="step-title">Raising the second arm</span><div class="step-content"><p class="problem"><strong>Problem</strong> Servo 2's horn needed to sit higher and level, and the lift was going to put a lot of weight on it.</p><p class="fix"><strong>Fix</strong> Four long screws under the block, with a 50 x 50 mm foot plate underneath. The screws were longer than I had planned for, but they do the job.</p></div></div>
+                <div class="step"><span class="step-number">2</span><span class="step-title">A lighter carriage</span><div class="step-content"><p class="problem"><strong>Problem</strong> A separate stand for the walls was going to be too heavy.</p><p class="fix"><strong>Fix</strong> A slotted top with the wall slits cut into it, held on with long screws, the same way as the base.</p></div></div>
+                <div class="step"><span class="step-number">3</span><span class="step-title">Combining the code</span><div class="step-content"><p class="problem"><strong>Problem</strong> My first combined sketch would not compile, and then it nested the pen lift inside the arm's sweep.</p><p class="fix"><strong>Fix</strong> Corrected the typos one by one, then took the loops out of each other so that each one does one job, one after another.</p></div></div>
+                <div class="step"><span class="step-number">4</span><span class="step-title">Adding servo 1</span><div class="step-content"><p class="problem"><strong>Problem</strong> Servo 1 barely moved, because the sketch only ever told it to go to 90. Once I gave it loops, a return loop that never ran made it jump at the start of each cycle.</p><p class="fix"><strong>Fix</strong> Corrected the test in the return loop, and moved both ranges so they start and end at 90, where <code class="inline">setup()</code> puts the servos.</p></div></div>
+                <div class="step"><span class="step-number">5</span><span class="step-title">The lift</span><div class="step-content"><p class="problem"><strong>Problem</strong> At <code class="inline">penUp</code> of 85 the pen hardly left the paper.</p><p class="fix"><strong>Fix</strong> To try next: a lower <code class="inline">penUp</code>, 80 first, then 75, watching that the lever does not hit the wall or the screws.</p></div></div>
+                <div class="step"><span class="step-number">6</span><span class="step-title">Marks piling up</span><div class="step-content"><p>The machine repeats the same path every cycle, so the ink builds up in one place. That is the reason to make the data, and not a fixed loop, decide each mark next.</p></div></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</section>
+
 <!-- NEXT -->
 <section id="next">
     <div class="section-content">
@@ -923,7 +1084,7 @@ void loop() {
             <h4>Next steps</h4>
             <ul>
                 <li>The bot decides how each mark is drawn: the gesture, the size, the speed and the number of passes. The data decides when. Each choice is logged with the model, the date and the prompt, and I write and learn the code.</li>
-                <li>When the 50 mm screws arrive, fix the two collars to the lever, then take photos and a video. Then redesign the third machine, taking the best of each: the two-servo arm for reach and the lift for raising the pen. They cannot simply be joined, so it is a new design, with the base raised so the pen comes down vertically.</li>
+                <li>Machine 3 is built and drawing (Experiment 06). Next: try a lower <code class="inline">penUp</code> for more clearance, move servo 1 and servo 2 together in one loop, and then let the data from the punctuation series decide the marks, instead of a fixed loop.</li>
                 <li>Choose one punctuation mark, probably the full stop, and decide one rule that links the data to what the arm does.</li>
                 <li>Learn how angles map to places on the page. The arm reaches about 13 cm from the base, a half-disc.</li>
                 <li>Python on the laptop reads <code class="inline">punctuation_data.csv</code> and sends instructions to the Uno over USB serial. The Uno only moves the servos.</li>
@@ -945,10 +1106,11 @@ void loop() {
         <a href="#exp03">Experiment 03</a>
         <a href="#exp04">Experiment 04</a>
         <a href="#exp05">Experiment 05</a>
+        <a href="#exp06">Experiment 06</a>
         <a href="#next">Next</a>
     </div>
     <p><strong>Robot Log</strong></p>
-    <p>Hardware: Arduino Uno R3 with sensor shield | 2 x SG90 servo (a third planned for the pen lift) | Cricut Air 2 | 300gsm watercolour paper</p>
+    <p>Hardware: Arduino Uno R3 with sensor shield | 3 x SG90 servo (two on the arm, one on the pen lift) | Cricut Air 2 | 300gsm watercolour paper</p>
     <p>Part of The Secret Lives of Punctuation and Living as Data</p>
     <p>&copy; 2026 Heidi Stokes</p>
 </footer>
