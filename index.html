@@ -1197,26 +1197,24 @@ void loop() {
 <!-- NEXT -->
 <section id="next">
     <div class="section-content">
-        <h2 class="section-title">Not yet tested, and next</h2>
+        <h2 class="section-title">Still to try, and next</h2>
         <div class="highlight-box">
-            <h4>Still to test</h4>
+            <h4>Still to try</h4>
             <ul>
-                <li>Which horn-screw hole on the test strip (2.0 to 2.8 mm) fits, and whether the paper arm slips on the horn. If it does, a second M2 screw through a spare hole in the horn is the fallback.</li>
-                <li>Centring both servos at 90 degrees before fitting the horns.</li>
-                <li>Fixing the base to the board with thick double-sided foam pads or Blu Tack, with the paper clip and the wires kept outside the pen's reach.</li>
-                <li>How much clearance the servo bodies need below their tabs.</li>
-                <li>The pen lift with two long screws fixing the top and bottom collars to the lever, in place of the masking tape. Whether the two collars hold the pen upright, and whether the lever sags when it is hanging off the horn with the pen in it.</li>
-                <li>The bottom plate of servo 2's base. The 50 mm M2 screws arrive on 26 October. Then check the 37 mm gap, and whether the nuts under the plate slide smoothly on the paper.</li>
+                <li>A lower <code class="inline">penUp</code>, 65, so the pen lifts fully and the thin lines between the marks stop. Watch that the lever does not hit the wall or the screws.</li>
+                <li>Servo 2 moving as well as servo 1, so the marks spread across the page and not along one arc. Keep both to 90 to 110 degrees.</li>
+                <li>Running the sketch once, instead of looping it, and comparing a single pass with several.</li>
+                <li>Moving the paper down, so the marks do not land on the printed caption.</li>
+                <li>How many of the 3,373 full stops the machine can draw before the page is too dark, and whether more than 20 is worth it.</li>
             </ul>
         </div>
         <div class="highlight-box">
             <h4>Next steps</h4>
             <ul>
+                <li>Experiment 08: repeat the full stop with the changes above, and log what is different from Experiment 07.</li>
+                <li>Try another mark from <code class="inline">punctuation_data.csv</code>, the comma or the question mark, and see how the machine draws it.</li>
                 <li>The bot decides how each mark is drawn: the gesture, the size, the speed and the number of passes. The data decides when. Each choice is logged with the model, the date and the prompt, and I write and learn the code.</li>
-                <li>Machine 3 is built and drawing (Experiment 06). Next: try a lower <code class="inline">penUp</code> for more clearance, move servo 1 and servo 2 together in one loop, and then let the data from the punctuation series decide the marks, instead of a fixed loop.</li>
-                <li>Done in Experiment 07: the full stop, sampled to 20 of 3,373. Next: make the sketch run once instead of looping, try a lower <code class="inline">penUp</code> (65) so the pen clears the paper, and shift the paper so the marks miss the caption.</li>
-                <li>Learn how angles map to places on the page. The arm reaches about 13 cm from the base, a half-disc.</li>
-                <li>Python on the laptop reads <code class="inline">punctuation_data.csv</code> and sends instructions to the Uno over USB serial. The Uno only moves the servos.</li>
+                <li>Photograph the result so my hand-drawn response and the machine's marks sit side by side, with less else on the page.</li>
                 <li>Log the intended path next to what was actually drawn.</li>
                 <li>Later: a camera to look at the drawing, and a separate battery pack if the servos stutter.</li>
             </ul>
