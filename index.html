@@ -175,6 +175,7 @@
     <button class="nav-button" onclick="scrollToSection('exp04')">Experiment 04</button>
     <button class="nav-button" onclick="scrollToSection('exp05')">Experiment 05</button>
     <button class="nav-button" onclick="scrollToSection('exp06')">Experiment 06</button>
+    <button class="nav-button" onclick="scrollToSection('exp07')">Experiment 07</button>
     <button class="nav-button" onclick="scrollToSection('next')">Next</button>
 </nav>
 
@@ -220,7 +221,7 @@
             <div class="entry-card" onclick="scrollToSection('exp04')"><div class="entry-num">04</div><div class="entry-name">A shield and a pen lift</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp05')"><div class="entry-num">05</div><div class="entry-name">The pen lift moves</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp06')"><div class="entry-num">06</div><div class="entry-name">Three servos: the arm and the pen lift together</div><div class="entry-status">Done</div></div>
-            <div class="entry-card planned"><div class="entry-num">07</div><div class="entry-name">First punctuation mark from data</div><div class="entry-status">Planned</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp07')"><div class="entry-num">07</div><div class="entry-name">First punctuation mark from data: the full stop</div><div class="entry-status">Done</div></div>
         </div>
     </div>
 </section>
@@ -1073,6 +1074,120 @@ void loop() {
 </div>
 </section>
 
+<hr class="dotted-divider">
+
+<section id="exp07">
+<div class="log-entry">
+    <div class="log-header">
+        <div class="log-badge">07</div>
+        <div class="log-info">
+            <div class="log-name">First punctuation mark from data: the full stop</div>
+            <p class="log-date">11 November 2026</p>
+            <span class="log-status">Drawing from the data. 20 full stops, looped on purpose to see the rhythm.</span>
+        </div>
+    </div>
+    <div class="log-body">
+
+        <div class="photo-display">
+            <span class="photo-label">Machine 3 drawing the full stops (video)</span>
+            <video controls playsinline preload="metadata" poster="images/exp07-fullstop-data.jpg" aria-label="The third drawing machine placing full stops on paper, one at a time, from punctuation data">
+                <source src="videos/exp07-fullstop-data-drawing.mp4" type="video/mp4">
+                Your browser can't play this video.
+            </video>
+            <p class="photo-caption">Machine 3 running the code below. Each full stop lands where the data says and stays for as long as the data says.</p>
+        </div>
+
+        <div class="session-metadata">
+            <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
+            <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">3 x SG90 (servo 2 not used in this sketch)</span></div>
+            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, 20 of 3,373 full stops</span></div>
+            <div class="metadata-item"><span class="metadata-label">Pen:</span><span class="metadata-value"><code class="inline">penUp</code> 75, <code class="inline">penDown</code> 100</span></div>
+            <div class="metadata-item"><span class="metadata-label">Sketch designed with:</span><span class="metadata-value">[model, date and prompt: to add]</span></div>
+        </div>
+
+        <div class="highlight-box">
+            <h4>In my own words</h4>
+            <p>This is the last in my series developing a drawing machine that makes marks representing my punctuation data. In this experiment I worked from the data for the full stop. It was sampled down to 20 of the 3,373 full stops, an amount my machine could manage, as any more would have been too much.</p>
+            <p>As you can see, there are limits to how the machine can interpret those marks. It drags and slides in a slightly haphazard, clumsy way. It is not the clinical translation evidenced through the sound data, because it relies on a human-made machine that is dependent on gravity, weight and pull. Perhaps these differences highlight a vector-space version against a physical one.</p>
+            <p>I chose to let it loop, partly because a single pass was too faint, and because the repetition shows the rhythm more clearly, with the pattern in the sampled data emerging as it goes round.</p>
+            <p>Why have I drawn my hand gesture as a comparison? Simply because I'm a person who exists in a physical world, and I articulate it differently. My experiences are tied to lived experience, and to living on an Earth that depends on gravity. My hand is a good tool for this because it carries the complexity of a punctuation mark that the symbol couldn't hold on its own. A bot has none of that, only patterns and vector space.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I built</h4>
+            <ul>
+                <li>I drew my own response first, by hand. The bot then decided how each mark is drawn, and I logged the choice. AI as mirror, not mind.</li>
+                <li>Servo 1 turns the arm to the position of each full stop. The position in the conversation, scaled from 0 to 1000, is mapped to 90 to 110 degrees, the safe range.</li>
+                <li>The pen goes down, stays, and lifts. The gap since the previous full stop sets how long it stays, from 0.3 to 3 seconds. A long gap leaves a dark cluster of ink, and a short one is a touch.</li>
+                <li>One pass takes about 40 seconds, and the sketch goes round again until I stop it.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I learned</h4>
+            <ul>
+                <li><code class="inline">map()</code> only works with whole numbers, the same as <code class="inline">int</code>. The <code class="inline">time_fraction</code> column runs from 0 to 1, so I scaled it to 0 to 1000 before it went into the sketch.</li>
+                <li>The data only decides where and for how long. How the pen moves between marks is the machine's: it drags, and the paper and the pen's weight get a say.</li>
+                <li>Because it loops, the same 20 positions repeat, so the darkness depends on how many passes I let it run, not only on the data.</li>
+                <li>Thin lines show between the marks, so the pen is probably not lifting fully. To try: a lower <code class="inline">penUp</code>, such as 65.</li>
+                <li>The marks landed over the printed caption on the page. Next time I will move the paper down.</li>
+            </ul>
+        </div>
+
+        <details class="log-toggle">
+            <summary>The code</summary>
+            <div class="log-content">
+                <div class="code-box"><div class="code-head"><span class="code-title">machine3_fullstop_data.ino</span><button class="code-copy" type="button">Copy</button></div>
+                    <pre>#include &lt;Servo.h&gt;
+
+Servo lift;
+Servo s1;
+Servo s2;
+
+int penUp = 75;
+int penDown = 100;
+
+// 20 of the 3,373 full stops
+// where = position in the conversation, scaled 0 to 1000
+// gap   = characters since the previous full stop
+int where[20] = {0, 40, 102, 148, 197, 249, 331, 393, 431, 495, 534, 602, 645, 680, 728, 819, 874, 916, 960, 1000};
+int gap[20] = {59, 265, 92, 40, 236, 81, 225, 53, 180, 17, 114, 178, 18, 112, 53, 226, 72, 109, 42, 170};
+
+void setup() {
+  s1.attach(8);
+  s2.attach(9);
+  s1.write(90);
+  s2.write(90);
+
+  lift.attach(10);
+  Serial.begin(9600);
+  lift.write(penUp);
+  delay(1000);
+}
+
+void loop() {
+  for (int i = 0; i &lt; 20; i++) {
+    s1.write(map(where[i], 0, 1000, 90, 110));   // where it lands
+    delay(500);
+    for (int a = penUp; a &lt;= penDown; a++) {    // pen down
+      lift.write(a);
+      delay(5);
+    }
+    delay(map(gap[i], 0, 300, 300, 3000));       // how long it stays
+    for (int a = penDown; a &gt;= penUp; a--) {    // pen up
+      lift.write(a);
+      delay(5);
+    }
+  }
+}</pre>
+                </div>
+            </div>
+        </details>
+
+    </div>
+</div>
+</section>
+
 <!-- NEXT -->
 <section id="next">
     <div class="section-content">
@@ -1093,7 +1208,7 @@ void loop() {
             <ul>
                 <li>The bot decides how each mark is drawn: the gesture, the size, the speed and the number of passes. The data decides when. Each choice is logged with the model, the date and the prompt, and I write and learn the code.</li>
                 <li>Machine 3 is built and drawing (Experiment 06). Next: try a lower <code class="inline">penUp</code> for more clearance, move servo 1 and servo 2 together in one loop, and then let the data from the punctuation series decide the marks, instead of a fixed loop.</li>
-                <li>Choose one punctuation mark, probably the full stop, and decide one rule that links the data to what the arm does.</li>
+                <li>Done in Experiment 07: the full stop, sampled to 20 of 3,373. Next: make the sketch run once instead of looping, try a lower <code class="inline">penUp</code> (65) so the pen clears the paper, and shift the paper so the marks miss the caption.</li>
                 <li>Learn how angles map to places on the page. The arm reaches about 13 cm from the base, a half-disc.</li>
                 <li>Python on the laptop reads <code class="inline">punctuation_data.csv</code> and sends instructions to the Uno over USB serial. The Uno only moves the servos.</li>
                 <li>Log the intended path next to what was actually drawn.</li>
@@ -1115,6 +1230,7 @@ void loop() {
         <a href="#exp04">Experiment 04</a>
         <a href="#exp05">Experiment 05</a>
         <a href="#exp06">Experiment 06</a>
+        <a href="#exp07">Experiment 07</a>
         <a href="#next">Next</a>
     </div>
     <p><strong>Robot Log</strong></p>
