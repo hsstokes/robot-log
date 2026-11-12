@@ -176,6 +176,7 @@
     <button class="nav-button" onclick="scrollToSection('exp05')">Experiment 05</button>
     <button class="nav-button" onclick="scrollToSection('exp06')">Experiment 06</button>
     <button class="nav-button" onclick="scrollToSection('exp07')">Experiment 07</button>
+    <button class="nav-button" onclick="scrollToSection('exp08')">Experiment 08</button>
     <button class="nav-button" onclick="scrollToSection('next')">Next</button>
 </nav>
 
@@ -222,6 +223,7 @@
             <div class="entry-card" onclick="scrollToSection('exp05')"><div class="entry-num">05</div><div class="entry-name">The pen lift moves</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp06')"><div class="entry-num">06</div><div class="entry-name">Three servos: the arm and the pen lift together</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp07')"><div class="entry-num">07</div><div class="entry-name">First punctuation mark from data: the full stop</div><div class="entry-status">Done</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp08')"><div class="entry-num">08</div><div class="entry-name">Second punctuation mark from data: the question mark</div><div class="entry-status">Done</div></div>
         </div>
     </div>
 </section>
@@ -1195,6 +1197,159 @@ void loop() {
 </div>
 </section>
 
+<hr class="dotted-divider">
+
+<section id="exp08">
+<div class="log-entry">
+    <div class="log-header">
+        <div class="log-badge">08</div>
+        <div class="log-info">
+            <div class="log-name">Second punctuation mark from data: the question mark</div>
+            <p class="log-date">12 November 2026</p>
+            <span class="log-status">Drawing from the data. All 275 question marks, drawn once.</span>
+        </div>
+    </div>
+    <div class="log-body">
+
+        <div class="photo-display">
+            <span class="photo-label">Machine 3 drawing the question marks (video)</span>
+            <video controls playsinline preload="metadata" poster="images/exp08-video-still.jpg" aria-label="The third drawing machine drawing the question mark data, one pull of the pen at a time" style="max-height: 700px; object-fit: contain;">
+                <source src="videos/exp08-question-mark-data-drawing.mp4" type="video/mp4">
+                Your browser can't play this video.
+            </video>
+            <p class="photo-caption">One minute of the run. Each pull of the pen is one question mark from the data.</p>
+        </div>
+
+        <div class="photo-display">
+            <span class="photo-label">The result: my hand gesture and the machine's drawing, each in its own frame</span>
+            <img src="images/exp08-question-mark-framed.jpg" alt="Two framed drawings on a clipboard. On the left, my hand-drawn gesture for a question mark. On the right, the dense black ink marks the machine made from the question mark data, curving upwards across the frame" style="max-height: 700px; object-fit: contain;">
+            <p class="photo-caption">Left: my interpretation of a question mark, as a hand. Right: the machine's drawing from all 275 question marks. Each frame was cut on the Cricut, and the labels were drawn with the Cricut pen.</p>
+        </div>
+
+        <div class="session-metadata">
+            <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
+            <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">3 x SG90: base (pin 8), pull (pin 9), pen lift (pin 10)</span></div>
+            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 275 question marks</span></div>
+            <div class="metadata-item"><span class="metadata-label">Pen:</span><span class="metadata-value"><code class="inline">penUp</code> 70, <code class="inline">penDown</code> 100</span></div>
+            <div class="metadata-item"><span class="metadata-label">Sketch designed with:</span><span class="metadata-value">Claude, 12 November 2026 [model and prompt: to add]</span></div>
+        </div>
+
+        <div class="highlight-box">
+            <h4>In my own words</h4>
+            <p>[To write. Your own words on this experiment.]</p>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I built</h4>
+            <ul>
+                <li>I drew my own response first, by hand, as a hand gesture for a question mark. The bot then decided how each mark is drawn, and I logged the choice. AI as mirror, not mind.</li>
+                <li>Claude reduced each of the 275 question marks to two numbers: where it falls in the conversation, and how long it had been since the last one.</li>
+                <li>Servo 1 turns the arm to where the question mark falls, from 90 to 110 degrees. Servo 2 pulls the pen across the page, and the gap since the last question mark sets how far, from 2 to 20 degrees. A long gap gives a long pull.</li>
+                <li>The sketch draws once and stops. There is no loop.</li>
+                <li>I cut a frame for each drawing on the Cricut, and drew the labels with the Cricut pen, so the two can be read side by side.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I learned</h4>
+            <ul>
+                <li>The 20-mark test was too small to mean anything. Using all 275 gave a drawing with weight and direction.</li>
+                <li>An <code class="inline">int</code> on the Uno only holds up to 32,767. One long gap in my first sketch wrapped round to a negative number and gave the last mark the wrong pull. In the final data every gap is capped at 2,000, and <code class="inline">constrain()</code> keeps the value in range.</li>
+                <li>The data only decides where and how far. The result had to correspond to the data, so it is not simply a drawing of a question mark.</li>
+                <li>Both drawings lift upwards at the end: my hand, and the machine's pulls. I think the open, lifting end of each pull is the part designed for a question. The arch itself is mostly the arm's geometry.</li>
+                <li>The run took much longer than I estimated. I have not yet found out why.</li>
+            </ul>
+        </div>
+
+        <details class="log-toggle">
+            <summary>The code</summary>
+            <div class="log-content">
+                <div class="code-box"><div class="code-head"><span class="code-title">machine3_question_mark_data.ino</span><button class="code-copy" type="button">Copy</button></div>
+                    <pre>#include &lt;Servo.h&gt;
+
+Servo lift;
+Servo s1;
+Servo s2;
+
+int penUp = 70;
+int penDown = 100;
+
+// all 275 question marks
+// where = position in the conversation, scaled 0 to 1000
+// gap   = characters since the previous question mark, capped at 2000
+int where[275] = {
+  1, 2, 5, 7, 7, 8, 8, 9, 9, 9, 10, 10, 11, 12, 14, 15, 17, 19, 20, 21,
+  23, 25, 26, 28, 31, 31, 34, 36, 40, 43, 110, 130, 153, 176, 180, 180, 180, 180, 181, 181,
+  181, 181, 181, 182, 183, 183, 200, 203, 203, 204, 204, 204, 205, 205, 205, 205, 206, 206, 207, 267,
+  268, 273, 274, 275, 275, 275, 278, 278, 278, 279, 279, 279, 279, 280, 280, 280, 280, 282, 282, 282,
+  285, 285, 288, 289, 294, 294, 295, 295, 295, 298, 298, 298, 298, 298, 299, 299, 299, 299, 300, 300,
+  301, 301, 301, 304, 304, 310, 311, 311, 311, 312, 315, 315, 315, 324, 324, 324, 327, 327, 332, 334,
+  334, 334, 334, 337, 337, 337, 345, 345, 345, 348, 348, 357, 362, 367, 367, 368, 368, 421, 421, 425,
+  426, 426, 426, 427, 430, 436, 436, 436, 446, 449, 449, 449, 454, 454, 454, 454, 455, 455, 456, 456,
+  456, 456, 456, 457, 457, 458, 458, 458, 461, 464, 465, 465, 466, 466, 467, 467, 468, 471, 474, 524,
+  524, 528, 529, 529, 530, 530, 533, 539, 539, 539, 550, 553, 553, 553, 558, 558, 558, 558, 559, 559,
+  559, 560, 560, 560, 560, 561, 561, 562, 562, 562, 565, 568, 569, 569, 570, 570, 571, 572, 572, 575,
+  578, 589, 653, 653, 656, 659, 662, 662, 663, 675, 696, 699, 734, 734, 734, 739, 739, 739, 739, 740,
+  740, 740, 740, 741, 741, 741, 742, 742, 743, 743, 743, 748, 748, 748, 748, 749, 749, 749, 749, 750,
+  750, 750, 750, 751, 755, 755, 755, 757, 760, 761, 761, 762, 764, 766, 827
+};
+int gap[275] = {
+  865, 309, 1827, 1121, 132, 718, 112, 77, 41, 78, 363, 297, 703, 574, 1380, 149, 1454, 1168, 820, 431,
+  1130, 1305, 297, 1478, 1774, 88, 1755, 1077, 2000, 1899, 2000, 2000, 2000, 2000, 2000, 31, 342, 49, 324, 64,
+  269, 16, 50, 395, 398, 409, 2000, 2000, 31, 307, 49, 293, 64, 228, 16, 50, 361, 364, 384, 2000,
+  630, 2000, 546, 319, 224, 100, 1434, 15, 83, 414, 62, 210, 64, 238, 57, 268, 44, 1009, 47, 43,
+  1908, 54, 1670, 476, 2000, 520, 278, 217, 93, 1261, 15, 83, 351, 62, 182, 64, 210, 61, 240, 52,
+  813, 47, 43, 1620, 54, 2000, 1033, 23, 76, 67, 2000, 31, 25, 2000, 25, 28, 2000, 45, 2000, 937,
+  23, 80, 71, 1875, 31, 25, 2000, 25, 28, 1729, 49, 2000, 2000, 2000, 13, 519, 44, 2000, 269, 2000,
+  470, 271, 216, 92, 1904, 2000, 31, 25, 2000, 1834, 25, 72, 2000, 26, 128, 52, 381, 100, 192, 76,
+  56, 288, 66, 219, 141, 801, 75, 54, 1458, 1495, 854, 83, 314, 356, 360, 350, 378, 1837, 1514, 2000,
+  283, 2000, 474, 278, 217, 93, 1941, 2000, 31, 25, 2000, 1893, 25, 73, 2000, 26, 129, 52, 390, 101,
+  196, 76, 56, 293, 66, 223, 143, 829, 76, 54, 1497, 1531, 878, 88, 322, 364, 368, 359, 389, 1871,
+  1536, 2000, 2000, 236, 2000, 1296, 1710, 349, 582, 2000, 2000, 1917, 2000, 25, 72, 2000, 26, 128, 52, 381,
+  100, 192, 76, 56, 288, 66, 219, 141, 523, 25, 72, 2000, 26, 128, 52, 381, 100, 192, 76, 56,
+  288, 66, 219, 141, 2000, 75, 54, 1124, 1495, 886, 75, 54, 1458, 1495, 2000
+};
+
+void setup() {
+  s1.attach(8);
+  s2.attach(9);
+  s1.write(90);
+  s2.write(90);
+
+  lift.attach(10);
+  lift.write(penUp);
+  delay(3000);
+
+  for (int i = 0; i &lt; 275; i++) {
+    s1.write(map(where[i], 0, 1000, 90, 110));   // where it lands
+    delay(500);
+    for (int a = penUp; a &lt;= penDown; a++) {    // pen down
+      lift.write(a);
+      delay(5);
+    }
+    int drag = map(constrain(gap[i], 0, 2000), 0, 2000, 2, 20);   // how far it pulls
+    for (int d = 0; d &lt;= drag; d++) {
+      s2.write(90 + d);
+      delay(30);
+    }
+    for (int a = penDown; a &gt;= penUp; a--) {    // pen up
+      lift.write(a);
+      delay(5);
+    }
+    s2.write(90);
+    delay(300);
+  }
+}
+
+void loop() { }</pre>
+                </div>
+            </div>
+        </details>
+
+    </div>
+</div>
+</section>
+
 <!-- NEXT -->
 <section id="next">
     <div class="section-content">
@@ -1202,18 +1357,18 @@ void loop() {
         <div class="highlight-box">
             <h4>Still to try</h4>
             <ul>
-                <li>A lower <code class="inline">penUp</code>, 65, so the pen lifts fully and the thin lines between the marks stop. Watch that the lever does not hit the wall or the screws.</li>
-                <li>Servo 2 moving as well as servo 1, so the marks spread across the page and not along one arc. Keep both to 90 to 110 degrees.</li>
-                <li>Running the sketch once, instead of looping it, and comparing a single pass with several.</li>
-                <li>Moving the paper down, so the marks do not land on the printed caption.</li>
-                <li>How many of the 3,373 full stops the machine can draw before the page is too dark, and whether more than 20 is worth it.</li>
+                <li>A wider range for servos 1 and 2 than 90 to 110 degrees, so the marks use more of the page. The safe range for servo 2 looks to be about 62 to 118.</li>
+                <li>A mark drawn from more than two numbers, such as a hook for the question mark. For that I would need more from the original text than position and gap.</li>
+                <li>Why the 275-mark run took so long. To check: print the mark number to the Serial Monitor and time the run.</li>
+                <li>Whether the colon count (9,727) is genuine punctuation or conversation labels, before I draw it.</li>
+                <li>How many of the full stops the machine can draw before the page is too dark, and whether more than 20 is worth it.</li>
             </ul>
         </div>
         <div class="highlight-box">
             <h4>Next steps</h4>
             <ul>
-                <li>Experiment 08: repeat the full stop with the changes above, and log what is different from Experiment 07.</li>
-                <li>Try another mark from <code class="inline">punctuation_data.csv</code>, the comma or the question mark, and see how the machine draws it.</li>
+                <li>Experiment 09: another mark from <code class="inline">punctuation_data.csv</code>, such as the comma, with a hand gesture of my own beside it.</li>
+                <li>Repeat the full stop with all of its marks, not 20, and compare it with Experiment 07.</li>
                 <li>The bot decides how each mark is drawn: the gesture, the size, the speed and the number of passes. The data decides when. Each choice is logged with the model, the date and the prompt, and I write and learn the code.</li>
                 <li>Photograph the result so my hand-drawn response and the machine's marks sit side by side, with less else on the page.</li>
                 <li>Log the intended path next to what was actually drawn.</li>
@@ -1236,6 +1391,7 @@ void loop() {
         <a href="#exp05">Experiment 05</a>
         <a href="#exp06">Experiment 06</a>
         <a href="#exp07">Experiment 07</a>
+        <a href="#exp08">Experiment 08</a>
         <a href="#next">Next</a>
     </div>
     <p><strong>Robot Log</strong></p>
