@@ -161,7 +161,7 @@
     </div>
     <div class="artist-statement">
         <p>A working record of building a two-servo pen arm on an Arduino. Each entry notes what was made, what went wrong, what changed, and exactly how it is wired and coded, so it can be rebuilt.</p>
-        <p>The arm is groundwork for The Secret Lives of Punctuation. The aim is for it to draw punctuation marks from the conversation data on the same sheet as my own hand-drawn gestures, so the human marks and the machine's marks sit as two separate outcomes.</p>
+        <p>The arm is groundwork for The Secret Lives of Punctuation. The aim is for it to draw punctuation marks from the bot&rsquo;s side of the conversation data on the same sheet as my own hand-drawn gestures, so the human marks and the machine's marks sit as two separate outcomes.</p>
     </div>
 </section>
 
@@ -199,6 +199,7 @@
                 <li>I respond to each punctuation mark by hand first: a drawn gesture, cut shapes and colour, and what I call keyboard painting, using elements of the mark alongside other marks.</li>
                 <li>Only when that is finished do I look at the bot&rsquo;s response, so its marks never influence mine.</li>
                 <li>I then compare the two. Things I had not envisaged only show up once the making is done, which seems right to me: as humans we advance through lived experience, and by reflecting on it.</li>
+                <li>The data is only ever the bot&rsquo;s side of the conversation. When it was extracted, every punctuation mark came from Claude&rsquo;s text, and none from mine. The machine draws the bot&rsquo;s marks, and my hand draws mine.</li>
                             <li>Claude then designs how the arm draws each mark from the data points alone, without having seen my drawing. I log what it chose, with the model, the date and the prompt. AI as mirror, not mind.</li>
             </ol>
             <p>Why have I drawn my hand gesture as a comparison? Simply because I'm a person who exists in a physical world, and I articulate it differently. My experiences are tied to lived experience, and to living on an Earth that depends on gravity. My hand is a good tool for this because it carries the complexity of a punctuation mark that the symbol couldn't hold on its own. A bot has none of that, only patterns and vector space.</p>
@@ -211,6 +212,7 @@
             <h4>The data and the real world</h4>
             <p>I recently read a section of Michael Pollan&rsquo;s <em>A World Appears</em> about how the laws of physics tell us that an object dropped from a height accelerates at a fixed rate: 32 feet per second, every second. This is only true if we put aside what actually happens in the real world, such as friction and air resistance, which alter the speed.</p>
             <p>I found this fascinating because there are things that remain unexplained. Even in so-called experiments, strange interference can creep into the outcome. In my own work it is relatively obvious. The machine works, but it is handmade, so it is never quite right. It is dictated by the data, and by what is possible within the machine&rsquo;s limits.</p>
+            <p>The data is controlled, fixed and clean in a vector space. As soon as it comes into the physical world, it changes, depending on the machine it comes through.</p>
         </div>
         <div class="highlight-box">
             <h4>Rules for the build</h4>
@@ -1123,7 +1125,7 @@ void loop() {
         <div class="session-metadata">
             <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
             <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">3 x SG90: base (pin 8), pull (pin 9), pen lift (pin 10)</span></div>
-            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 275 question marks</span></div>
+            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 275 question marks, Claude&rsquo;s side of the conversation only</span></div>
             <div class="metadata-item"><span class="metadata-label">Pen:</span><span class="metadata-value"><code class="inline">penUp</code> 70, <code class="inline">penDown</code> 100</span></div>
             <div class="metadata-item"><span class="metadata-label">Sketch designed with:</span><span class="metadata-value">Claude Sonnet 5.5, 12 November 2026. Prompt: asked Claude to decide how the mark should be drawn from the data points.</span></div>
         </div>
@@ -1278,7 +1280,7 @@ void loop() { }</pre>
         <div class="session-metadata">
             <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
             <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">3 x SG90: base (pin 8), pull (pin 9), pen lift (pin 10)</span></div>
-            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 3,373 full stops</span></div>
+            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 3,373 full stops, Claude&rsquo;s side of the conversation only</span></div>
             <div class="metadata-item"><span class="metadata-label">Pen:</span><span class="metadata-value"><code class="inline">penUp</code> 70, <code class="inline">penDown</code> 80</span></div>
             <div class="metadata-item"><span class="metadata-label">Run time:</span><span class="metadata-value">10:05 to 10:40, about 35 minutes</span></div>
             <div class="metadata-item"><span class="metadata-label">Sketch designed with:</span><span class="metadata-value">Claude Sonnet 5.5, 13 November 2026. Prompt: asked Claude to decide how the mark should be drawn from the data points.</span></div>
@@ -1757,7 +1759,7 @@ void loop() { }
         <div class="session-metadata">
             <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
             <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">3 x SG90: base (pin 8), pull (pin 9), pen lift (pin 10)</span></div>
-            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 3,787 commas</span></div>
+            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 3,787 commas, Claude&rsquo;s side of the conversation only</span></div>
             <div class="metadata-item"><span class="metadata-label">Pen:</span><span class="metadata-value"><code class="inline">penUp</code> 70, <code class="inline">penDown</code> 80</span></div>
             <div class="metadata-item"><span class="metadata-label">Range:</span><span class="metadata-value">1266 to 1781 microseconds, about 70 to 120 degrees</span></div>
             <div class="metadata-item"><span class="metadata-label">Run time:</span><span class="metadata-value">about 50 minutes</span></div>
@@ -1773,7 +1775,7 @@ void loop() { }
         <div class="highlight-box">
             <h4>What I built</h4>
             <ul>
-                <li>This draws every comma in the same Claude Sonnet 5.5 conversation, the way Experiment 08 drew every full stop. My hand gesture for the comma is beside it.</li>
+                <li>This draws every comma in Claude&rsquo;s side of the same Claude Sonnet 5.5 conversation, the way Experiment 08 drew every full stop. My hand gesture for the comma is beside it.</li>
                 <li>Claude reduced each comma to two numbers: where it falls in the conversation, and how long it had been since the last comma. The gap is capped at 2,000 characters. This time the gap is on a log scale, not square-rooted. I chose it after comparing a preview of both, because it spreads the commas out more.</li>
                 <li>Servo 1 turns the arm to where the comma falls. Servo 2 moves the pen up the page by the gap. Then the pen stays down while servo 2 keeps moving up a little further, and a longer gap gives a longer tail. I chose a rising tail as the machine's own kind of comma, instead of copying the curve of a handwritten one.</li>
                 <li>I used a wider range than before: about 70 to 120 degrees, where Experiment 08 used 90 to 110. Servo 2 is held 250 microseconds below the top of the range, so the tail cannot push it past the limit.</li>
@@ -2290,7 +2292,7 @@ void loop() { }
         <div class="session-metadata">
             <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
             <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">3 x SG90: base (pin 8), pull (pin 9), pen lift (pin 10)</span></div>
-            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 28 exclamation marks</span></div>
+            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 28 exclamation marks, Claude&rsquo;s side of the conversation only</span></div>
             <div class="metadata-item"><span class="metadata-label">Pen:</span><span class="metadata-value"><code class="inline">penUp</code> 60, <code class="inline">penDown</code> 80</span></div>
             <div class="metadata-item"><span class="metadata-label">Range:</span><span class="metadata-value">1266 to 1781 microseconds, about 70 to 120 degrees</span></div>
             <div class="metadata-item"><span class="metadata-label">Run time:</span><span class="metadata-value">about a minute (not timed)</span></div>
