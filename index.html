@@ -2272,7 +2272,7 @@ void loop() { }
             <video controls playsinline preload="metadata" poster="images/exp10-exclamation-video-still.jpg" aria-label="The third drawing machine drawing exclamation marks on watercolour paper, each a short stroke followed by a dot, with the marks building up in a dense band">
                 <source src="videos/exp10-exclamation-process.mp4" type="video/mp4">
             </video>
-            <p class="photo-caption">Sixty-four seconds from the run. Each mark is a stroke, then a lift of the pen, then a dot. The marks bunch together where the exclamation marks came close together in the conversation.</p>
+            <p class="photo-caption">Sixty-four seconds, about the whole run. Each mark is a stroke, then a lift of the pen, then a dot. The marks bunch together where the exclamation marks came close together in the conversation.</p>
         </div>
 
         <div class="photo-display">
@@ -2293,6 +2293,7 @@ void loop() { }
             <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 28 exclamation marks</span></div>
             <div class="metadata-item"><span class="metadata-label">Pen:</span><span class="metadata-value"><code class="inline">penUp</code> 60, <code class="inline">penDown</code> 80</span></div>
             <div class="metadata-item"><span class="metadata-label">Range:</span><span class="metadata-value">1266 to 1781 microseconds, about 70 to 120 degrees</span></div>
+            <div class="metadata-item"><span class="metadata-label">Run time:</span><span class="metadata-value">about a minute (not timed)</span></div>
             <div class="metadata-item"><span class="metadata-label">Sketch designed with:</span><span class="metadata-value">Claude Sonnet 5.5, 20 to 23 November 2026. Prompt: asked Claude to write the exclamation mark sketch from the data points in punctuation_data.csv, and to give me tips as I built it.</span></div>
         </div>
 
@@ -2305,7 +2306,7 @@ void loop() { }
         <div class="highlight-box">
             <h4>What I built</h4>
             <ul>
-                <li>This draws every exclamation mark in the same Claude Sonnet 5.5 conversation, the way the earlier experiments drew every full stop and comma. My hand gesture is beside it.</li>
+                <li>This draws every exclamation mark in Claude&rsquo;s side of the same Claude Sonnet 5.5 conversation, the way the earlier experiments drew every full stop and comma. The marks come from Claude&rsquo;s text only, not from the parts I wrote. My hand gesture is beside it.</li>
                 <li>Claude reduced each exclamation mark to two numbers: where it falls in the conversation, and how long it had been since the last one. The gap is on a log scale and is not capped. The longest gap is 75,355 characters.</li>
                 <li>Servo 1 turns the arm to where the mark falls. Because the last exclamation mark comes about 70% of the way through the conversation, the right-hand 30% of the sweep stays empty. Servo 2 sets how far up the page the mark starts, from the gap.</li>
                 <li>Each mark is two touches. First a stroke: the pen goes down and servo 2 moves 300 microseconds while it is down, then the pen lifts. Then a dot, 360 microseconds further along. The range is limited so that the dot can never push servo 2 past the top of its range.</li>
