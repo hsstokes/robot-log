@@ -176,9 +176,8 @@
     <button class="nav-button" onclick="scrollToSection('exp05')">Experiment 05</button>
     <button class="nav-button" onclick="scrollToSection('exp06')">Experiment 06</button>
     <button class="nav-button" onclick="scrollToSection('exp07')">Experiment 07</button>
-    <button class="nav-button" onclick="scrollToSection('exp08')">Experiment 08</button>
-        <button class="nav-button" onclick="scrollToSection('exp09')">Experiment 09</button>
-    <button class="nav-button" onclick="scrollToSection('exp10')">Experiment 10</button>
+        <button class="nav-button" onclick="scrollToSection('exp08')">Experiment 08</button>
+    <button class="nav-button" onclick="scrollToSection('exp09')">Experiment 09</button>
     <button class="nav-button" onclick="scrollToSection('next')">Next</button>
 </nav>
 
@@ -199,7 +198,9 @@
                 <li>I respond to each punctuation mark by hand first: a drawn gesture, cut shapes and colour, and what I call keyboard painting, using elements of the mark alongside other marks.</li>
                 <li>Only when that is finished do I look at the bot&rsquo;s response, so its marks never influence mine.</li>
                 <li>I then compare the two. Things I had not envisaged only show up once the making is done, which seems right to me: as humans we advance through lived experience, and by reflecting on it.</li>
+                            <li>Claude then designs how the arm draws each mark from the data points alone, without having seen my drawing. I log what it chose, with the model, the date and the prompt. AI as mirror, not mind.</li>
             </ol>
+            <p>Why have I drawn my hand gesture as a comparison? Simply because I'm a person who exists in a physical world, and I articulate it differently. My experiences are tied to lived experience, and to living on an Earth that depends on gravity. My hand is a good tool for this because it carries the complexity of a punctuation mark that the symbol couldn't hold on its own. A bot has none of that, only patterns and vector space.</p>
         </div>
         <div class="highlight-box">
             <h4>What the experiments are telling me so far</h4>
@@ -228,10 +229,9 @@
             <div class="entry-card" onclick="scrollToSection('exp04')"><div class="entry-num">04</div><div class="entry-name">A shield and a pen lift</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp05')"><div class="entry-num">05</div><div class="entry-name">The pen lift moves</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp06')"><div class="entry-num">06</div><div class="entry-name">Three servos: the arm and the pen lift together</div><div class="entry-status">Done</div></div>
-            <div class="entry-card" onclick="scrollToSection('exp07')"><div class="entry-num">07</div><div class="entry-name">First punctuation mark from data: the full stop</div><div class="entry-status">Done</div></div>
-            <div class="entry-card" onclick="scrollToSection('exp08')"><div class="entry-num">08</div><div class="entry-name">Second punctuation mark from data: the question mark</div><div class="entry-status">Done</div></div>
-            <div class="entry-card" onclick="scrollToSection('exp09')"><div class="entry-num">09</div><div class="entry-name">The full stop again, with all 3,373 marks</div><div class="entry-status">Done</div></div>
-            <div class="entry-card" onclick="scrollToSection('exp10')"><div class="entry-num">10</div><div class="entry-name">The comma, with all 3,787 marks and a tail</div><div class="entry-status">Done</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp07')"><div class="entry-num">07</div><div class="entry-name">The question mark, with all 275 marks</div><div class="entry-status">Done</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp08')"><div class="entry-num">08</div><div class="entry-name">The full stop, with all 3,373 marks</div><div class="entry-status">Done</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp09')"><div class="entry-num">09</div><div class="entry-name">The comma, with all 3,787 marks and a tail</div><div class="entry-status">Done</div></div>
         </div>
     </div>
 </section>
@@ -1091,128 +1091,7 @@ void loop() {
     <div class="log-header">
         <div class="log-badge">07</div>
         <div class="log-info">
-            <div class="log-name">First punctuation mark from data: the full stop</div>
-            <p class="log-date">11 November 2026</p>
-            <span class="log-status">Drawing from the data. 20 full stops, looped on purpose to see the rhythm.</span>
-        </div>
-    </div>
-    <div class="log-body">
-
-        <div class="photo-display">
-            <span class="photo-label">Machine 3 drawing the full stops (video)</span>
-            <video controls playsinline preload="metadata" poster="images/exp07-video-still.jpg" aria-label="The third drawing machine placing full stops on paper, one at a time, from punctuation data">
-                <source src="videos/exp07-fullstop-data-drawing.mp4" type="video/mp4">
-                Your browser can't play this video.
-            </video>
-            <p class="photo-caption">Machine 3 running the code below. Each full stop lands where the data says and stays for as long as the data says.</p>
-        </div>
-
-        <div class="photo-display">
-            <span class="photo-label">The result: my hand-drawn response and the machine's marks from the data</span>
-            <img src="images/exp07-fullstop-data.jpg" alt="The finished page: my hand-drawn response to the full stop, with the machine's ink marks from the punctuation data beside it" style="max-height: 700px; object-fit: contain;">
-            <p class="photo-caption">The finished page. My own hand-drawn response, and the marks the machine made from the data for the full stop.</p>
-        </div>
-
-        <div class="session-metadata">
-            <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
-            <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">3 x SG90 (servo 2 not used in this sketch)</span></div>
-            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, 20 of 3,373 full stops</span></div>
-            <div class="metadata-item"><span class="metadata-label">Pen:</span><span class="metadata-value"><code class="inline">penUp</code> 75, <code class="inline">penDown</code> 100</span></div>
-            <div class="metadata-item"><span class="metadata-label">Sketch designed with:</span><span class="metadata-value">Claude Sonnet 5.5, 11 November 2026. Prompt: asked Claude to decide how the mark should be drawn from the data points.</span></div>
-        </div>
-
-        <div class="highlight-box">
-            <h4>In my own words</h4>
-            <p>This is the first in my series developing a drawing machine that makes marks representing my punctuation data. In this experiment I worked from the data for the full stop. It was sampled down to 20 of the 3,373 full stops, an amount my machine could manage, as any more would have been too much.</p>
-            <p>As you can see, there are limits to how the machine can interpret those marks. It drags and slides in a slightly haphazard, clumsy way. It is not the clinical translation evidenced through the sound data, because it relies on a human-made machine that is dependent on gravity, weight and pull. Perhaps these differences highlight a vector-space version against a physical one.</p>
-            <p>I chose to let it loop, partly because a single pass was too faint, and because the repetition shows the rhythm more clearly, with the pattern in the sampled data emerging as it goes round.</p>
-            <p>When I look at my version of a hand gesture that mimics a full stop and its relation to the mark produced by a bot through a handmade machine, the marks are repetitive, almost deterministic. They try to produce the same response each time, but at different data points. The humanness about it is that the human-made machine is a bit flawed, so the marks aren't as consistent as the machine would probably like. The difference between my mark-making of a full stop and a bot's is obvious. My hand gesture clearly determines some sort of finality. A full stop, for me, is a form of an ending, but for a bot, it is continuous. It is just another mark in a vast array of information.</p>
-            <p>Why have I drawn my hand gesture as a comparison? Simply because I'm a person who exists in a physical world, and I articulate it differently. My experiences are tied to lived experience, and to living on an Earth that depends on gravity. My hand is a good tool for this because it carries the complexity of a punctuation mark that the symbol couldn't hold on its own. A bot has none of that, only patterns and vector space.</p>
-        </div>
-
-        <div class="highlight-box">
-            <h4>What I built</h4>
-            <ul>
-                <li>I drew my own response first, by hand. Claude had not seen my drawing when it designed the sketch, so how each mark is drawn comes purely from the data points, and I logged the choice. AI as mirror, not mind.</li>
-                <li>Servo 1 turns the arm to the position of each full stop. The position in the conversation, scaled from 0 to 1000, is mapped to 90 to 110 degrees, the safe range.</li>
-                <li>The pen goes down, stays, and lifts. The gap since the previous full stop sets how long it stays, from 0.3 to 3 seconds. A long gap leaves a dark cluster of ink, and a short one is a touch.</li>
-                <li>One pass takes about 40 seconds, and the sketch goes round again until I stop it.</li>
-            </ul>
-        </div>
-
-        <div class="highlight-box">
-            <h4>What I learned</h4>
-            <ul>
-                <li><code class="inline">map()</code> only works with whole numbers, the same as <code class="inline">int</code>. The <code class="inline">time_fraction</code> column runs from 0 to 1, so I scaled it to 0 to 1000 before it went into the sketch.</li>
-                <li>The data only decides where and for how long. How the pen moves between marks is the machine's: it drags, and the paper and the pen's weight get a say.</li>
-                <li>Because it loops, the same 20 positions repeat, so the darkness depends on how many passes I let it run, not only on the data.</li>
-                <li>Thin lines show between the marks, so the pen is probably not lifting fully. To try: a lower <code class="inline">penUp</code>, such as 65.</li>
-                <li>The marks landed over the printed caption on the page. Next time I will move the paper down.</li>
-            </ul>
-        </div>
-
-        <details class="log-toggle">
-            <summary>The code</summary>
-            <div class="log-content">
-                <div class="code-box"><div class="code-head"><span class="code-title">machine3_fullstop_data.ino</span><button class="code-copy" type="button">Copy</button></div>
-                    <pre>#include &lt;Servo.h&gt;
-
-Servo lift;
-Servo s1;
-Servo s2;
-
-int penUp = 75;
-int penDown = 100;
-
-// 20 of the 3,373 full stops
-// where = position in the conversation, scaled 0 to 1000
-// gap   = characters since the previous full stop
-int where[20] = {0, 40, 102, 148, 197, 249, 331, 393, 431, 495, 534, 602, 645, 680, 728, 819, 874, 916, 960, 1000};
-int gap[20] = {59, 265, 92, 40, 236, 81, 225, 53, 180, 17, 114, 178, 18, 112, 53, 226, 72, 109, 42, 170};
-
-void setup() {
-  s1.attach(8);
-  s2.attach(9);
-  s1.write(90);
-  s2.write(90);
-
-  lift.attach(10);
-  Serial.begin(9600);
-  lift.write(penUp);
-  delay(1000);
-}
-
-void loop() {
-  for (int i = 0; i &lt; 20; i++) {
-    s1.write(map(where[i], 0, 1000, 90, 110));   // where it lands
-    delay(500);
-    for (int a = penUp; a &lt;= penDown; a++) {    // pen down
-      lift.write(a);
-      delay(5);
-    }
-    delay(map(gap[i], 0, 300, 300, 3000));       // how long it stays
-    for (int a = penDown; a &gt;= penUp; a--) {    // pen up
-      lift.write(a);
-      delay(5);
-    }
-  }
-}</pre>
-                </div>
-            </div>
-        </details>
-
-    </div>
-</div>
-</section>
-
-<hr class="dotted-divider">
-
-<section id="exp08">
-<div class="log-entry">
-    <div class="log-header">
-        <div class="log-badge">08</div>
-        <div class="log-info">
-            <div class="log-name">Second punctuation mark from data: the question mark</div>
+            <div class="log-name">The question mark, with all 275 marks</div>
             <p class="log-date">12 November 2026</p>
             <span class="log-status">Drawing from the data. All 275 question marks, drawn once.</span>
         </div>
@@ -1362,12 +1241,12 @@ void loop() { }</pre>
 
 <hr class="dotted-divider">
 
-<section id="exp09">
+<section id="exp08">
 <div class="log-entry">
     <div class="log-header">
-        <div class="log-badge">09</div>
+        <div class="log-badge">08</div>
         <div class="log-info">
-            <div class="log-name">The full stop again, with all 3,373 marks</div>
+            <div class="log-name">The full stop, with all 3,373 marks</div>
             <p class="log-date">13 November 2026</p>
             <span class="log-status">Drawing from the data. All 3,373 full stops, one touch of the pen each.</span>
         </div>
@@ -1407,7 +1286,7 @@ void loop() { }</pre>
         <div class="highlight-box">
             <h4>What I built</h4>
             <ul>
-                <li>This redoes Experiment 07, which drew only 20 of the full stops. This time the machine draws every one of them. My hand gesture is the one from Experiment 07.</li>
+                <li>An earlier test drew only 20 of the full stops, looped over and over, and the page became too cluttered to read, so I took it out of the log. This time the machine draws every one of them. My hand gesture is the closed fist.</li>
                 <li>Claude reduced each full stop to two numbers: where it falls in the conversation, and how long it had been since the last one. The gap is square-rooted, so the very long gaps do not flatten everything else.</li>
                 <li>Servo 1 turns the arm to where the full stop falls. Servo 2 moves the pen up the page by the gap. Each full stop is a single touch of the pen, not a pull.</li>
                 <li>I wrote the sketch myself with hints, and learned how to use <code class="inline">writeMicroseconds()</code> for finer positions, <code class="inline">PROGMEM</code> to keep 6,746 numbers in the Uno's flash memory, and a <code class="inline">touch()</code> function for the pen.</li>
@@ -1841,10 +1720,10 @@ void loop() { }
 </div>
 </section>
 
-<section id="exp10">
+<section id="exp09">
 <div class="log-entry">
     <div class="log-header">
-        <div class="log-badge">10</div>
+        <div class="log-badge">09</div>
         <div class="log-info">
             <div class="log-name">The comma, with all 3,787 marks and a tail</div>
             <p class="log-date">16 November 2026</p>
@@ -1887,10 +1766,10 @@ void loop() { }
         <div class="highlight-box">
             <h4>What I built</h4>
             <ul>
-                <li>This draws every comma in the same Claude Sonnet 5.5 conversation, the way Experiment 09 drew every full stop. My hand gesture for the comma is beside it.</li>
+                <li>This draws every comma in the same Claude Sonnet 5.5 conversation, the way Experiment 08 drew every full stop. My hand gesture for the comma is beside it.</li>
                 <li>Claude reduced each comma to two numbers: where it falls in the conversation, and how long it had been since the last comma. The gap is capped at 2,000 characters. This time the gap is on a log scale, not square-rooted. I chose it after comparing a preview of both, because it spreads the commas out more.</li>
                 <li>Servo 1 turns the arm to where the comma falls. Servo 2 moves the pen up the page by the gap. Then the pen stays down while servo 2 keeps moving up a little further, and a longer gap gives a longer tail. I chose a rising tail as the machine's own kind of comma, instead of copying the curve of a handwritten one.</li>
-                <li>I used a wider range than before: about 70 to 120 degrees, where Experiment 09 used 90 to 110. Servo 2 is held 250 microseconds below the top of the range, so the tail cannot push it past the limit.</li>
+                <li>I used a wider range than before: about 70 to 120 degrees, where Experiment 08 used 90 to 110. Servo 2 is held 250 microseconds below the top of the range, so the tail cannot push it past the limit.</li>
                 <li>I wrote the comma function myself with hints, from a skeleton Claude gave me. I learned how to hand a function values (<code class="inline">commaMark(y, tail)</code>), how the step of a <code class="inline">for</code> loop works, and <code class="inline">constrain()</code> to keep a number in range.</li>
                 <li>I tested the sketch on a sample first, drawing every 38th comma (100 of the 3,787), before running them all.</li>
             </ul>
@@ -2379,13 +2258,12 @@ void loop() { }
                 <li>A machine with a longer reach. The comma used a wider range than 90 to 110 degrees, but the drawing still fills only a small part of an A4 sheet. The safe range for servo 2 looked to be about 62 to 118 degrees.</li>
                 <li>A mark drawn from more than two numbers, such as a hook for the question mark. For that I would need more from the original text than position and gap.</li>
                 <li>Why the 275-mark run took so long. To check: print the mark number to the Serial Monitor and time the run.</li>
-                                <li>How many of the full stops the machine can draw before the page is too dark, and whether more than 20 is worth it.</li>
             </ul>
         </div>
         <div class="highlight-box">
             <h4>Next steps</h4>
             <ul>
-                <li>Experiment 11: to be decided. I am leaving out the colon and the semicolon for now, because I do not trust their counts in <code class="inline">punctuation_data.csv</code>.</li>
+                <li>Experiment 10: to be decided. I am leaving out the colon and the semicolon for now, because I do not trust their counts in <code class="inline">punctuation_data.csv</code>.</li>
                 <li>The bot decides how each mark is drawn: the gesture, the size, the speed and the number of passes. The data decides when. Each choice is logged with the model, the date and the prompt, and I write and learn the code.</li>
                 <li>Photograph the result so my hand-drawn response and the machine's marks sit side by side, with less else on the page.</li>
                 <li>Log the intended path next to what was actually drawn.</li>
@@ -2410,7 +2288,6 @@ void loop() { }
         <a href="#exp07">Experiment 07</a>
         <a href="#exp08">Experiment 08</a>
         <a href="#exp09">Experiment 09</a>
-        <a href="#exp10">Experiment 10</a>
         <a href="#next">Next</a>
     </div>
     <p><strong>Robot Log</strong></p>
