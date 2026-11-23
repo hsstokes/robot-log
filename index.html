@@ -178,6 +178,7 @@
     <button class="nav-button" onclick="scrollToSection('exp07')">Experiment 07</button>
         <button class="nav-button" onclick="scrollToSection('exp08')">Experiment 08</button>
     <button class="nav-button" onclick="scrollToSection('exp09')">Experiment 09</button>
+    <button class="nav-button" onclick="scrollToSection('exp10')">Experiment 10</button>
     <button class="nav-button" onclick="scrollToSection('next')">Next</button>
 </nav>
 
@@ -237,6 +238,7 @@
             <div class="entry-card" onclick="scrollToSection('exp07')"><div class="entry-num">07</div><div class="entry-name">The question mark, with all 275 marks</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp08')"><div class="entry-num">08</div><div class="entry-name">The full stop, with all 3,373 marks</div><div class="entry-status">Done</div></div>
             <div class="entry-card" onclick="scrollToSection('exp09')"><div class="entry-num">09</div><div class="entry-name">The comma, with all 3,787 marks and a tail</div><div class="entry-status">Done</div></div>
+            <div class="entry-card" onclick="scrollToSection('exp10')"><div class="entry-num">10</div><div class="entry-name">The exclamation mark, with 28 marks, each a stroke and a dot</div><div class="entry-status">Done</div></div>
         </div>
     </div>
 </section>
@@ -2253,6 +2255,165 @@ void loop() { }
 </div>
 </section>
 
+<section id="exp10">
+<div class="log-entry">
+    <div class="log-header">
+        <div class="log-badge">10</div>
+        <div class="log-info">
+            <div class="log-name">The exclamation mark, with 28 marks, each a stroke and a dot</div>
+            <p class="log-date">23 November 2026</p>
+            <span class="log-status">Drawing from the data. All 28 exclamation marks, each a stroke and a dot, gone over more times when the last came close.</span>
+        </div>
+    </div>
+    <div class="log-body">
+
+        <div class="photo-display">
+            <span class="photo-label">Machine 3 drawing the exclamation marks (video)</span>
+            <video controls playsinline preload="metadata" poster="images/exp10-exclamation-video-still.jpg" aria-label="The third drawing machine drawing exclamation marks on watercolour paper, each a short stroke followed by a dot, with the marks building up in a dense band">
+                <source src="videos/exp10-exclamation-process.mp4" type="video/mp4">
+            </video>
+            <p class="photo-caption">Sixty-four seconds from the run. Each mark is a stroke, then a lift of the pen, then a dot. The marks bunch together where the exclamation marks came close together in the conversation.</p>
+        </div>
+
+        <div class="photo-display">
+            <span class="photo-label">My hand gesture for an exclamation mark</span>
+            <img src="images/exp10-exclamation-hand-gesture.jpg" alt="A pen drawing of a hand with a raised index finger and the other fingers curled, on a card with a printed label underneath" style="object-fit: contain; background: var(--ink);">
+            <p class="photo-caption">My interpretation of an exclamation mark, as a hand: a raised finger.</p>
+        </div>
+
+        <div class="photo-display">
+            <span class="photo-label">The result: my hand gesture and the machine&rsquo;s drawing</span>
+            <img src="images/exp10-exclamation-human-and-machine.jpg" alt="Two framed cards side by side on a dark wooden surface. Left: my hand-drawn raised finger. Right: the machine&rsquo;s drawing, with most of the marks bunched together in a dense band at one end and a few single marks spaced out above it. Each card has a printed label underneath." style="object-fit: contain; background: var(--ink);">
+            <p class="photo-caption">My hand gesture beside the machine&rsquo;s drawing from all 28 exclamation marks.</p>
+        </div>
+
+        <div class="session-metadata">
+            <div class="metadata-item"><span class="metadata-label">Board:</span><span class="metadata-value">Arduino Uno R3 with V5 sensor shield</span></div>
+            <div class="metadata-item"><span class="metadata-label">Servos:</span><span class="metadata-value">3 x SG90: base (pin 8), pull (pin 9), pen lift (pin 10)</span></div>
+            <div class="metadata-item"><span class="metadata-label">Data:</span><span class="metadata-value">punctuation_data.csv, all 28 exclamation marks</span></div>
+            <div class="metadata-item"><span class="metadata-label">Pen:</span><span class="metadata-value"><code class="inline">penUp</code> 60, <code class="inline">penDown</code> 80</span></div>
+            <div class="metadata-item"><span class="metadata-label">Range:</span><span class="metadata-value">1266 to 1781 microseconds, about 70 to 120 degrees</span></div>
+            <div class="metadata-item"><span class="metadata-label">Sketch designed with:</span><span class="metadata-value">Claude Sonnet 5.5, 20 to 23 November 2026. Prompt: asked Claude to write the exclamation mark sketch from the data points in punctuation_data.csv, and to give me tips as I built it.</span></div>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I built</h4>
+            <ul>
+                <li>This draws every exclamation mark in the same Claude Sonnet 5.5 conversation, the way the earlier experiments drew every full stop and comma. My hand gesture is beside it.</li>
+                <li>Claude reduced each exclamation mark to two numbers: where it falls in the conversation, and how long it had been since the last one. The gap is on a log scale and is not capped. The longest gap is 75,355 characters.</li>
+                <li>Servo 1 turns the arm to where the mark falls. Because the last exclamation mark comes about 70% of the way through the conversation, the right-hand 30% of the sweep stays empty. Servo 2 sets how far up the page the mark starts, from the gap.</li>
+                <li>Each mark is two touches. First a stroke: the pen goes down and servo 2 moves 300 microseconds while it is down, then the pen lifts. Then a dot, 360 microseconds further along. The range is limited so that the dot can never push servo 2 past the top of its range.</li>
+                <li>Claude chose the number of passes from the gap. Where the last exclamation mark was close (a gap under 100 characters), the stroke is gone over three times. Where the gap was under 2,000 characters, twice. Where it was longer, once. Closeness becomes weight.</li>
+                <li>I put the sketch together from my earlier ones, with Claude&rsquo;s tips on where the new function goes and how to hand it values. It took several compile errors before it ran. One was Claude&rsquo;s mistake: it first said an array could be a plain type, but data kept in <code class="inline">PROGMEM</code> has to be <code class="inline">const</code>.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h4>What I learned</h4>
+            <ul>
+                <li>My first test run gave short dashes with no dots. The stroke was too short (200 microseconds), so the dot read as a continuation of the dash. Claude lengthened the stroke and moved the dot further along. The earlier test clip is not used here.</li>
+                <li>The strokes curve, because servo 2 swings the pen in an arc around its pivot and not in a straight line. Claude designed straight vertical strokes. The machine drew arcs.</li>
+                <li>On thicker watercolour paper, fine hairlines appeared between marks where the pen was grazing the surface. Lowering <code class="inline">penUp</code> to 60 removed them.</li>
+                <li>The exclamation marks are not spread evenly through the conversation. Fifteen of the 28 fall within the first 18%, so the marks bunch into a dense band at one end, with a few single marks and long gaps across the rest.</li>
+                <li>With only 28 marks, this is the sparsest drawing so far. The weight comes from the repeated passes, not from the number of marks.</li>
+            </ul>
+        </div>
+
+        <details class="log-toggle">
+            <summary>The code</summary>
+            <div class="log-content">
+                <div class="code-box"><div class="code-head"><span class="code-title">machine3_exclamation_all28.ino</span><button class="code-copy" type="button">Copy</button></div>
+                    <pre>#include &lt;Servo.h&gt;
+#include &lt;avr/pgmspace.h&gt;
+
+Servo lift;
+Servo s1;
+Servo s2;
+
+int penUp = 60;
+int penDown = 80;
+
+int low = 1266;   // about 70 degrees
+int high = 1781;  // about 120 degrees
+
+int howMany = 28;  // all the exclamation marks
+
+// EXCLAMATION data: 28 exclamation marks from punctuation_data.csv
+// where  = time_fraction x 1000 (where the mark falls in the conversation)
+// height = log-scaled gap since the last exclamation mark
+// passes = how many times the stroke is gone over (3 if the last was close, 1 if far)
+const uint16_t where[28] PROGMEM = {0, 3, 3, 5, 6, 6, 8, 17, 66, 66, 67, 87, 87, 87, 176, 200, 268, 289, 357, 362, 421, 446, 466, 525, 550, 570, 696, 699};
+const uint16_t height[28] PROGMEM = {470, 641, 513, 639, 509, 358, 620, 769, 916, 300, 279, 839, 300, 279, 969, 853, 945, 840, 945, 719, 932, 855, 834, 932, 857, 836, 1000, 673};
+const uint8_t passes[28] PROGMEM = {2, 2, 2, 2, 2, 3, 2, 1, 1, 3, 3, 1, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2};
+
+void exclaim(int y, int count) {
+  for (int n = 0; n &lt; count; n++) {
+    s2.writeMicroseconds(y);
+    delay(300);
+    for (int a = penUp; a &lt;= penDown; a++) {      // pen down
+      lift.write(a);
+      delay(5);
+    }
+    for (int k = 0; k &lt;= 30; k++) {               // the stroke: servo 2 moves while the pen is down
+      s2.writeMicroseconds(y + k * 10);
+      delay(5);
+    }
+    for (int a = penDown; a &gt;= penUp; a--) {      // pen up
+      lift.write(a);
+      delay(5);
+    }
+  }
+
+  s2.writeMicroseconds(y + 360);                  // the dot, a little further along
+  delay(300);
+  for (int a = penUp; a &lt;= penDown; a++) {
+    lift.write(a);
+    delay(5);
+  }
+  delay(80);
+  for (int a = penDown; a &gt;= penUp; a--) {
+    lift.write(a);
+    delay(5);
+  }
+}
+
+void setup() {
+  Serial.begin(9600);
+  s1.attach(8);
+  s2.attach(9);
+  lift.attach(10);
+  lift.write(penUp);
+  delay(3000);
+
+  for (int i = 0; i &lt; howMany; i++) {
+    int w = pgm_read_word(&amp;where[i]);
+    int h = pgm_read_word(&amp;height[i]);
+    int p = pgm_read_byte(&amp;passes[i]);
+
+    int x = map(w, 0, 1000, low, high);                                     // across
+    int y = constrain(map(h, 0, 1000, low, high - 360), low, high - 360);   // up, leaving room for the dot
+
+    s1.writeMicroseconds(x);
+    delay(500);
+    exclaim(y, p);
+
+    Serial.print(w); Serial.print(" ");
+    Serial.print(h); Serial.print(" ");
+    Serial.println(p);
+  }
+  Serial.println("done");
+}
+
+void loop() { }
+</pre>
+                </div>
+            </div>
+        </details>
+
+    </div>
+</div>
+</section>
+
 <!-- NEXT -->
 <section id="next">
     <div class="section-content">
@@ -2268,7 +2429,7 @@ void loop() { }
         <div class="highlight-box">
             <h4>Next steps</h4>
             <ul>
-                <li>Experiment 10: to be decided. I am leaving out the colon and the semicolon for now, because I do not trust their counts in <code class="inline">punctuation_data.csv</code>.</li>
+                <li>Experiment 11: to be decided. I am leaving out the colon and the semicolon for now, because I do not trust their counts in <code class="inline">punctuation_data.csv</code>.</li>
                 <li>The bot decides how each mark is drawn: the gesture, the size, the speed and the number of passes. The data decides when. Each choice is logged with the model, the date and the prompt, and I write and learn the code.</li>
                 <li>Photograph the result so my hand-drawn response and the machine's marks sit side by side, with less else on the page.</li>
                 <li>Log the intended path next to what was actually drawn.</li>
@@ -2293,6 +2454,7 @@ void loop() { }
         <a href="#exp07">Experiment 07</a>
         <a href="#exp08">Experiment 08</a>
         <a href="#exp09">Experiment 09</a>
+        <a href="#exp10">Experiment 10</a>
         <a href="#next">Next</a>
     </div>
     <p><strong>Robot Log</strong></p>
